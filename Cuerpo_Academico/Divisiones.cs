@@ -145,11 +145,14 @@ namespace Cuerpo_Academico
                 MessageBox.Show("No se ha encontrado la division", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
+            if(!Validator.validateField(new Field(txtNombre.Text, "text"))){
+                MessageBox.Show("Se debe agregar un nuevo nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
             if (MessageBox.Show("¿Seguro que deseas modificar a " + resultado["nombre"].ToString() + "?", "Modificar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
-                if(!Validator.
-                consulta = "UPDATE division SET nombre = " + txtNombre.Text;
+                consulta = "UPDATE division SET nombre = '" + txtNombre.Text + "' WHERE  id = " + txtID.Text ;
                 resultado = conexion.ejecutarComando(consulta);
                 if (resultado.RecordsAffected > 0)
                 {
