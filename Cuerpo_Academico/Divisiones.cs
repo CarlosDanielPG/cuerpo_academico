@@ -66,13 +66,20 @@ namespace Cuerpo_Academico
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            if(txtID.Text == "")
+            
+            if (!Validator.validateID(txtID.Text))
             {
-                MessageBox.Show("Ingresa el ID a buscar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             consulta = "SELECT * FROM division WHERE id = " + txtID.Text;
             resultado = conexion.ejecutarComando(consulta);
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se ha encontrado la division", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            txtNombre.Text = resultado["nombre"].ToString();
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -94,12 +101,67 @@ namespace Cuerpo_Academico
         
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            consulta = "SELECT nombre FROM division WHERE id = " + txtID.Text;
+            resultado = conexion.ejecutarComando(consulta);
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se ha encontrado la division", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
+            if (MessageBox.Show("¿Seguro que deseas eliminar a " + resultado["nombre"].ToString() + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            {
+                consulta = "DELETE FROM division WHERE id = " + txtID.Text;
+                resultado = conexion.ejecutarComando(consulta);
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("División eliminada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Limpiar();
+                    cargarDataGridViewDivisiones();
+                }
+                else
+                {
+                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            consulta = "SELECT nombre FROM division WHERE id = " + txtID.Text;
+            resultado = conexion.ejecutarComando(consulta);
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se ha encontrado la division", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
+            if (MessageBox.Show("¿Seguro que deseas modificar a " + resultado["nombre"].ToString() + "?", "Modificar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            {
+                if(!Validator.
+                consulta = "UPDATE division SET nombre = " + txtNombre.Text;
+                resultado = conexion.ejecutarComando(consulta);
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("División modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Limpiar();
+                    cargarDataGridViewDivisiones();
+                }
+                else
+                {
+                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
