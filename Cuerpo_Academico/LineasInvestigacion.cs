@@ -76,7 +76,7 @@ namespace Cuerpo_Academico
             resultado = conexion.ejecutarComando(consulta);
             if (resultado.RecordsAffected > 0)
             {
-                MessageBox.Show("Linea de investigación guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Línea de investigación guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             Limpiar();
             cargarDataGridViewDivisiones();
@@ -93,7 +93,7 @@ namespace Cuerpo_Academico
             resultado = conexion.ejecutarComando(consulta);
             if (!resultado.HasRows)
             {
-                MessageBox.Show("No se ha encontrado la linea de investigacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("No se ha encontrado la línea de investigacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             txtNombre.Text = resultado["descripcion"].ToString();
@@ -110,17 +110,17 @@ namespace Cuerpo_Academico
             resultado = conexion.ejecutarComando(consulta);
             if (!resultado.HasRows)
             {
-                MessageBox.Show("No se ha encontrado la linea de investigación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("No se ha encontrado la línea de investigación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            if (MessageBox.Show("¿Seguro que deseas eliminar a " + resultado["descripcion"].ToString() + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            if (MessageBox.Show("¿Seguro que deseas eliminar " + resultado["descripcion"].ToString() + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
                 consulta = "DELETE FROM linea_investigacion WHERE id = " + txtID.Text;
                 resultado = conexion.ejecutarComando(consulta);
                 if (resultado.RecordsAffected > 0)
                 {
-                    MessageBox.Show("Linea de investigación eliminada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Línea de investigación eliminada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Limpiar();
                     cargarDataGridViewDivisiones();
                 }
@@ -142,12 +142,12 @@ namespace Cuerpo_Academico
             resultado = conexion.ejecutarComando(consulta);
             if (!resultado.HasRows)
             {
-                MessageBox.Show("No se ha encontrado la linea de investigación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("No se ha encontrado la línea de investigación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             if (!Validator.validateField(new Field(txtNombre.Text, "text")))
             {
-                MessageBox.Show("Se debe agregar una nueva descripcion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Se debe agregar una nueva descripción", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -157,7 +157,7 @@ namespace Cuerpo_Academico
                 resultado = conexion.ejecutarComando(consulta);
                 if (resultado.RecordsAffected > 0)
                 {
-                    MessageBox.Show("Linea de investigación modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Línea de investigación modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Limpiar();
                     cargarDataGridViewDivisiones();
                 }

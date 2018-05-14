@@ -17,7 +17,6 @@ C:\Users\Carlo\Documents\CUCEI\4°\Bases de Datos\Actividad Integradora\Cuerpo_A
 C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerpo_Academico\bin\x64\Debug\Cuerpo_Academico.exe.config
 C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerpo_Academico\bin\x64\Debug\Cuerpo_Academico.exe
 C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerpo_Academico\bin\x64\Debug\Cuerpo_Academico.pdb
-C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerpo_Academico\obj\x64\Debug\Cuerpo_Academico.csprojAssemblyReference.cache
 C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerpo_Academico\obj\x64\Debug\Cuerpo_Academico.Carreras.resources
 C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerpo_Academico\obj\x64\Debug\Cuerpo_Academico.Divisiones.resources
 C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerpo_Academico\obj\x64\Debug\Cuerpo_Academico.Inicio.resources
@@ -32,3 +31,4 @@ C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerp
 C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerpo_Academico\obj\x64\Debug\Cuerpo_Academico.csproj.CoreCompileInputs.cache
 C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerpo_Academico\obj\x64\Debug\Cuerpo_Academico.exe
 C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerpo_Academico\obj\x64\Debug\Cuerpo_Academico.pdb
+C:\Users\crhistian\Desktop\Qci\Cuarto\bases de datos\proy\cuerpo_academico\Cuerpo_Academico\obj\x64\Debug\Cuerpo_Academico.csprojAssemblyReference.cache
