@@ -139,10 +139,15 @@ namespace Cuerpo_Academico
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
-        {   
-            if (!Validator.validateFields(createListFields()))
+        {
+            List<ComboBox> comboBoxes = new List<ComboBox>();
+            List<ListBox> listBoxes = new List<ListBox>();
+            comboBoxes.Add(cmbTipoUsuario);
+            comboBoxes.Add(cmbDivision);
+            listBoxes.Add(listGrados);
+            if (!Validator.validateFields(createListFields()) || !Validator.validateComboBoxes(comboBoxes) || !Validator.validateListBoxes(listBoxes))
             {
-                MessageBox.Show("Faltan llenar campos\n1. Toma en cuenta que la contraseña tiene que ser mayor a 6 caracteres", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Faltan llenar campos\n1. Toma en cuenta que la contraseña tiene que ser mayor a 6 caracteres\n2. El correo debe ser váilido\n3. Debes seleccionar tanto el tipo de usuario como la division\n4. Agregar uno o más grados.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             consulta = "INSERT INTO profesor (nombre, apellido_paterno, apellido_materno, tipo_usuario, id_division, correo, password) VALUES ('" +
@@ -242,9 +247,9 @@ namespace Cuerpo_Academico
         
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            if (txtID.Text == "")
+            if (!Validator.validateID(txtID.Text))
             {
-                MessageBox.Show("Ingresa el ID a eliminar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("El ID debe ser numérico y no estar vacio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             consulta = "SELECT nombre, apellido_paterno, apellido_materno FROM profesor WHERE id = " + txtID.Text;

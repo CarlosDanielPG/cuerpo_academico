@@ -60,6 +60,16 @@ namespace Cuerpo_Academico
             return true;
         }
 
+        public static bool validateListBoxes(List<ListBox> list)
+        {
+            foreach(ListBox listBox in list)
+            {
+                if (listBox.Items.Count == 0)
+                    return false;
+            }
+            return true;
+        }
+
         public static bool validateID(string id)
         {
             if (id == "")
