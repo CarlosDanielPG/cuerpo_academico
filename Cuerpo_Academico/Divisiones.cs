@@ -66,7 +66,6 @@ namespace Cuerpo_Academico
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            
             if (!Validator.validateID(txtID.Text))
             {
                 MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
