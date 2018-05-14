@@ -15,7 +15,7 @@ namespace Cuerpo_Academico
 
         public Conexion()
         {
-            conexion = new OdbcConnection("Driver={MySQL ODBC 5.3 Unicode Driver};" + "Server=localhost;" + "Port=3306; Database=cuerpo_academico;" + "User=root; Password=; option=3;");
+            conexion = new OdbcConnection("Driver={MySQL ODBC 8.0 Unicode Driver};" + "Server=localhost;" + "Port=3306; Database=cuerpo_academico;" + "User=root; Password=; option=3;");
         }
 
         public OdbcDataReader ejecutarComando(string consulta)
