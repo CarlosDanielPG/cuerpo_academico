@@ -40,7 +40,7 @@ namespace Cuerpo_Academico
                         DataGridViewRow fila = new DataGridViewRow();
                         fila.CreateCells(dgvDivisiones);
                         fila.Cells[0].Value = resultado["id"].ToString();
-                        fila.Cells[1].Value = resultado["nombre"].ToString();
+                        fila.Cells[1].Value = resultado["descripcion"].ToString();
                         dgvDivisiones.Rows.Add(fila);
                     }
                 }
@@ -158,7 +158,7 @@ namespace Cuerpo_Academico
                 MessageBox.Show("Faltan llenar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            consulta = "INSERT INTO linea_investigacion (nombre) VALUES('" + txtNombre.Text + "');";
+            consulta = "INSERT INTO linea_investigacion (descripcion) VALUES('" + txtNombre.Text + "');";
             resultado = conexion.ejecutarComando(consulta);
             if (resultado.RecordsAffected > 0)
             {
