@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtDescripcion = new System.Windows.Forms.TextBox();
+            this.txtNombre = new System.Windows.Forms.TextBox();
             this.lblDescripcion = new System.Windows.Forms.Label();
             this.gbBusqueda = new System.Windows.Forms.GroupBox();
             this.lblID = new System.Windows.Forms.Label();
@@ -44,12 +44,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvDivisiones)).BeginInit();
             this.SuspendLayout();
             // 
-            // txtDescripcion
+            // txtNombre
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(26, 43);
-            this.txtDescripcion.Name = "txtDescripcion";
-            this.txtDescripcion.Size = new System.Drawing.Size(145, 20);
-            this.txtDescripcion.TabIndex = 0;
+            this.txtNombre.Location = new System.Drawing.Point(26, 43);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(145, 20);
+            this.txtNombre.TabIndex = 0;
             // 
             // lblDescripcion
             // 
@@ -125,6 +125,7 @@
             this.btnGuardar.TabIndex = 50;
             this.btnGuardar.Text = "Guardar";
             this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click_1);
             // 
             // dgvDivisiones
             // 
@@ -159,7 +160,7 @@
             this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.gbBusqueda);
             this.Controls.Add(this.lblDescripcion);
-            this.Controls.Add(this.txtDescripcion);
+            this.Controls.Add(this.txtNombre);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "LineasInvestigacion";
             this.Text = "LineasInvestigacion";
@@ -173,7 +174,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtDescripcion;
+        private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label lblDescripcion;
         private System.Windows.Forms.GroupBox gbBusqueda;
         private System.Windows.Forms.Label lblID;

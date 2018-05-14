@@ -66,7 +66,6 @@ namespace Cuerpo_Academico
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            
             if (!Validator.validateID(txtID.Text))
             {
                 MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -84,7 +83,7 @@ namespace Cuerpo_Academico
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (!validarCampos())
+            if (!Validator.validateField(new Field(txtNombre.Text, "text")))
             {
                 MessageBox.Show("Faltan llenar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
