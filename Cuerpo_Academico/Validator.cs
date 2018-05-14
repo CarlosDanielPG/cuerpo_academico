@@ -50,7 +50,7 @@ namespace Cuerpo_Academico
             }
             return true;
         }
-        public static bool validateComboBoxs(List<ComboBox> list)
+        public static bool validateComboBoxes(List<ComboBox> list)
         {
             foreach(ComboBox combobox in list)
             {
