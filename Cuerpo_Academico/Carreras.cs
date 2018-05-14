@@ -86,7 +86,11 @@ namespace Cuerpo_Academico
             List<ComboBox> comboBoxes = new List<ComboBox>();
             comboBoxes.Add(cmbDivisiones);
             comboBoxes.Add(cmbNivel);
-            if(!Validator.v)
+            if(!Validator.validateComboBoxes(comboBoxes))
+            {
+                MessageBox.Show("Seleccion un nivel y/o una division", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             consulta = "INSERT INTO carrera (nombre, id_nivel, id_division) VALUES('" + txtNombre.Text + "', " + (cmbNivel.SelectedItem as ComboBoxItem).Value.ToString() + ", " + (cmbDivisiones.SelectedItem as ComboBoxItem).Value.ToString() + ");";
             resultado = conexion.ejecutarComando(consulta);
             if (resultado.RecordsAffected > 0)
