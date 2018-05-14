@@ -8,6 +8,25 @@ namespace Cuerpo_Academico
 {
     class Validator
     {
+        public static bool validateField(Field field)
+        {
+            if (field.getField() == "")
+                return false;
+            if (field.getType() == "text")
+            {
+                return true;
+            }
+            if (field.getType() == "email")
+            {
+                return true;
+            }
+            if (field.getType() == "password")
+            {
+                if (field.getField().Length < 6)
+                    return false;
+            }
+            return true;
+        }
         public static bool validateFields(List<Field> fields)
         {
             foreach(Field field in fields)
