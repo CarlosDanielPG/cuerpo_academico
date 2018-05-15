@@ -64,92 +64,6 @@ namespace Cuerpo_Academico
         }
         #endregion
 
-        private void btnBuscar_Click(object sender, EventArgs e)
-        {
-            if (!Validator.validateID(txtID.Text))
-            {
-                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            consulta = "SELECT * FROM linea_investigacion WHERE id = " + txtID.Text;
-            resultado = conexion.ejecutarComando(consulta);
-            if (!resultado.HasRows)
-            {
-                MessageBox.Show("No se ha encontrado la linea de investigacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            txtNombre.Text = resultado["nombre"].ToString();
-        }
-
-
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (!Validator.validateID(txtID.Text))
-            {
-                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            consulta = "SELECT nombre FROM linea_investigacion WHERE id = " + txtID.Text;
-            resultado = conexion.ejecutarComando(consulta);
-            if (!resultado.HasRows)
-            {
-                MessageBox.Show("No se ha encontrado la linea de investigación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-
-            if (MessageBox.Show("¿Seguro que deseas eliminar a " + resultado["nombre"].ToString() + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
-            {
-                consulta = "DELETE FROM linea_investigacion WHERE id = " + txtID.Text;
-                resultado = conexion.ejecutarComando(consulta);
-                if (resultado.RecordsAffected > 0)
-                {
-                    MessageBox.Show("Linea de investigación eliminada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Limpiar();
-                    cargarDataGridViewDivisiones();
-                }
-                else
-                {
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void btnModificar_Click(object sender, EventArgs e)
-        {
-            if (!Validator.validateID(txtID.Text))
-            {
-                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            consulta = "SELECT nombre FROM linea_division WHERE id = " + txtID.Text;
-            resultado = conexion.ejecutarComando(consulta);
-            if (!resultado.HasRows)
-            {
-                MessageBox.Show("No se ha encontrado la linea de investigación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            if (!Validator.validateField(new Field(txtNombre.Text, "text")))
-            {
-                MessageBox.Show("Se debe agregar un nuevo nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-
-            if (MessageBox.Show("¿Seguro que deseas modificar a " + resultado["nombre"].ToString() + "?", "Modificar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
-            {
-                consulta = "UPDATE linea_investigacion SET nombre = '" + txtNombre.Text + "' WHERE  id = " + txtID.Text;
-                resultado = conexion.ejecutarComando(consulta);
-                if (resultado.RecordsAffected > 0)
-                {
-                    MessageBox.Show("Linea de investigación modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Limpiar();
-                    cargarDataGridViewDivisiones();
-                }
-                else
-                {
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
 
         private void btnGuardar_Click_1(object sender, EventArgs e)
         {
@@ -162,10 +76,96 @@ namespace Cuerpo_Academico
             resultado = conexion.ejecutarComando(consulta);
             if (resultado.RecordsAffected > 0)
             {
-                MessageBox.Show("Linea de investigación guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Línea de investigación guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             Limpiar();
             cargarDataGridViewDivisiones();
+        }
+
+        private void btnBuscar_Click_1(object sender, EventArgs e)
+        {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            consulta = "SELECT * FROM linea_investigacion WHERE id = " + txtID.Text;
+            resultado = conexion.ejecutarComando(consulta);
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se ha encontrado la línea de investigacion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            txtNombre.Text = resultado["descripcion"].ToString();
+        }
+
+        private void btnEliminar_Click_1(object sender, EventArgs e)
+        {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            consulta = "SELECT descripcion FROM linea_investigacion WHERE id = " + txtID.Text;
+            resultado = conexion.ejecutarComando(consulta);
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se ha encontrado la línea de investigación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            if (MessageBox.Show("¿Seguro que deseas eliminar " + resultado["descripcion"].ToString() + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            {
+                consulta = "DELETE FROM linea_investigacion WHERE id = " + txtID.Text;
+                resultado = conexion.ejecutarComando(consulta);
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("Línea de investigación eliminada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Limpiar();
+                    cargarDataGridViewDivisiones();
+                }
+                else
+                {
+                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnModificar_Click_1(object sender, EventArgs e)
+        {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            consulta = "SELECT descripcion FROM linea_investigacion WHERE id = " + txtID.Text;
+            resultado = conexion.ejecutarComando(consulta);
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se ha encontrado la línea de investigación", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            if (!Validator.validateField(new Field(txtNombre.Text, "text")))
+            {
+                MessageBox.Show("Se debe agregar una nueva descripción", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            if (MessageBox.Show("¿Seguro que deseas modificar a " + resultado["descripcion"].ToString() + "?", "Modificar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            {
+                consulta = "UPDATE linea_investigacion SET descripcion = '" + txtNombre.Text + "' WHERE  id = " + txtID.Text;
+                resultado = conexion.ejecutarComando(consulta);
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("Línea de investigación modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Limpiar();
+                    cargarDataGridViewDivisiones();
+                }
+                else
+                {
+                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
