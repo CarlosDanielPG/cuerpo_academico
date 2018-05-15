@@ -79,25 +79,170 @@ namespace Cuerpo_Academico
             cargarComboBox(conexion.ejecutarComando(consulta), cmbDivisiones);
         }
 
+        private void LimpiarCarrera()
+        {
+            txtNombre.Clear();
+        }
+
+        private bool validarCampos()
+        {
+            if (txtNombre.Text == "" || cmbNivel.SelectedItem == null || cmbDivisiones.SelectedItem == null)
+                return false;
+            return true;
+        }
+
         #endregion
+
+        #region BUTTONS
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             List<ComboBox> comboBoxes = new List<ComboBox>();
+
             comboBoxes.Add(cmbDivisiones);
             comboBoxes.Add(cmbNivel);
-            if(!Validator.validateComboBoxes(comboBoxes))
+
+            if(txtNombre.Text == "" || !Validator.validateComboBoxes(comboBoxes))
             {
-                MessageBox.Show("Seleccion un nivel y/o una division", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Faltan llenar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             consulta = "INSERT INTO carrera (nombre, id_nivel, id_division) VALUES('" + txtNombre.Text + "', " + (cmbNivel.SelectedItem as ComboBoxItem).Value.ToString() + ", " + (cmbDivisiones.SelectedItem as ComboBoxItem).Value.ToString() + ");";
+
             resultado = conexion.ejecutarComando(consulta);
+
             if (resultado.RecordsAffected > 0)
             {
                 MessageBox.Show("Carrera guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
             cargarDataGridViewCarreras();
         }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            consulta = "SELECT * FROM carrera WHERE id = " + txtID.Text;
+
+            resultado = conexion.ejecutarComando(consulta);
+
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se ha encontrado la carrera", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            txtNombre.Text = resultado["nombre"].ToString();
+
+            int index = 0;
+
+            foreach (var item in cmbDivisiones.Items)
+            {
+                if ((item as ComboBoxItem).Value == resultado["id_division"].ToString())
+                    cmbDivisiones.SelectedIndex = index;
+                index++;
+            }
+
+            index = 0;
+
+            foreach (var item in cmbNivel.Items)
+            {
+                if ((item as ComboBoxItem).Value == resultado["id_nivel"].ToString())
+                    cmbNivel.SelectedIndex = index;
+                index++;
+            }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            LimpiarCarrera();
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            consulta = "SELECT nombre FROM carrera WHERE id = " + txtID.Text;
+
+            resultado = conexion.ejecutarComando(consulta);
+
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se ha encontrado la carrera", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            if (MessageBox.Show("¿Seguro que deseas eliminar a " + resultado["nombre"].ToString() + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            {
+                consulta = "DELETE FROM carrera WHERE id = " + txtID.Text;
+
+                resultado = conexion.ejecutarComando(consulta);
+
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("Carrera eliminada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    LimpiarCarrera();
+
+                    cargarDataGridViewCarreras();
+                }
+                else
+                {
+                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("El ID debe ser numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            if(!validarCampos())
+            {
+                MessageBox.Show("Faltan llenar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            consulta = "SELECT nombre FROM carrera WHERE id = " + txtID.Text;
+
+            resultado = conexion.ejecutarComando(consulta);
+
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se ha encontrado la carrera", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }            
+
+            if (MessageBox.Show("¿Seguro que deseas modificar a " + resultado["nombre"].ToString() + "?", "Modificar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            {
+                consulta = "UPDATE carrera SET nombre = '" + txtNombre.Text + "', id_nivel = " + (cmbNivel.SelectedItem as ComboBoxItem).Value.ToString() + ", id_division = " + (cmbDivisiones.SelectedItem as ComboBoxItem).Value.ToString() + " WHERE  id = " + txtID.Text;
+                resultado = conexion.ejecutarComando(consulta);
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("Carrera modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarCarrera();
+                    cargarDataGridViewCarreras();
+                }
+                else
+                {
+                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        #endregion
     }
 }
