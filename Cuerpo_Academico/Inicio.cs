@@ -18,6 +18,14 @@ namespace Cuerpo_Academico
         private Conexion conexion;
         private OdbcDataReader resultado;
         private Profesor profesor;
+        Profesores profesores = null;
+        Divisiones divisiones = null;
+        Carreras carreras = null;
+        LineasInvestigacion lineasInvestigacion = null;
+        Propositos propositos = null;
+        TiposProduccion tiposProduccion = null;
+        Producciones producciones = null;
+        Instituciones instituciones = null;
 
         public Inicio(Login login, Profesor profesor)
         {
@@ -37,37 +45,42 @@ namespace Cuerpo_Academico
             //tcPrincipal.TabPages.Remove(tabCarreras);
             sLblUsuario.Text += " " + profesor.getNombreCompleto();
             // Profesores
-            Profesores profesores = new Profesores();
+            profesores = new Profesores();
             profesores.TopLevel = false;
             tabProfesores.Controls.Add(profesores);
             profesores.Show();
             // Divisiones
-            Divisiones divisiones = new Divisiones();
+            divisiones = new Divisiones();
             divisiones.TopLevel = false;
             tabDivisiones.Controls.Add(divisiones);
             divisiones.Show();
             // Carreras
-            Carreras carreras = new Carreras();
+            carreras = new Carreras();
             carreras.TopLevel = false;
             tabCarreras.Controls.Add(carreras);
             carreras.Show();
             // Lineas Investigacion
-            LineasInvestigacion lineasInvestigacion = new LineasInvestigacion();
+            lineasInvestigacion = new LineasInvestigacion();
             lineasInvestigacion.TopLevel = false;
             tabLineasInvestigacion.Controls.Add(lineasInvestigacion);
             lineasInvestigacion.Show();
             // Propósitos
-            Propositos propositos = new Propositos();
+            propositos = new Propositos();
             propositos.TopLevel = false;
             tabPropositos.Controls.Add(propositos);
             propositos.Show();
+            // Instituciones
+            instituciones = new Instituciones();
+            instituciones.TopLevel = false;
+            tabInstituciones.Controls.Add(instituciones);
+            instituciones.Show();
             // Tipos de Produccion
-            TiposProduccion tiposProduccion = new TiposProduccion();
+            tiposProduccion = new TiposProduccion();
             tiposProduccion.TopLevel = false;
             tabTiposProduccion.Controls.Add(tiposProduccion);
             tiposProduccion.Show();
             // Producciones
-            Producciones producciones = new Producciones();
+            producciones = new Producciones(this.profesor);
             producciones.TopLevel = false;
             tabProducciones.Controls.Add(producciones);
             producciones.Show();
@@ -78,6 +91,20 @@ namespace Cuerpo_Academico
             Close();
         }
 
-
+        private void tcPrincipal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tcPrincipal.SelectedIndex == 0 && profesores != null)
+                profesores.cargarCmbDivisiones();
+            if (tcPrincipal.SelectedIndex == 2 && carreras != null)
+                carreras.cargarCmbDivisiones();
+            if(tcPrincipal.SelectedIndex == 7 && producciones != null)
+            {
+                producciones.cargarInstituciones();
+                producciones.cargarLineasInvestigacion();
+                producciones.cargarProfesores();
+                producciones.cargarPropositos();
+                producciones.cargarTiposProduccion();
+            }
+        }
     }
 }

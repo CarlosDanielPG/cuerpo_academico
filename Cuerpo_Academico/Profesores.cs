@@ -16,8 +16,10 @@ namespace Cuerpo_Academico
         private string consulta;
         private Conexion conexion;
         private OdbcDataReader resultado;
+        private List<Field> listFields;
         public Profesores()
         {
+            listFields = new List<Field>();
             conexion = new Conexion();
             InitializeComponent();
         }
@@ -25,6 +27,7 @@ namespace Cuerpo_Academico
         private void Profesores_Load(object sender, EventArgs e)
         {
             cargarTabProfesores();
+            createListFields();
         }
 
         #region Functions
@@ -41,6 +44,12 @@ namespace Cuerpo_Academico
             cargarComboBox(conexion.ejecutarComando(consulta), cmbGrados);
 
             cargarDataGridViewProfesores();
+        }
+
+        public void cargarCmbDivisiones()
+        {
+            consulta = "SELECT * FROM division";
+            cargarComboBox(conexion.ejecutarComando(consulta), cmbDivision);
         }
 
         private void cargarDataGridViewProfesores()
@@ -75,6 +84,7 @@ namespace Cuerpo_Academico
 
         private void cargarComboBox(OdbcDataReader resultado, ComboBox comboBox)
         {
+            comboBox.Items.Clear();
             if (resultado.HasRows)
             {
                 while (resultado.Read())
@@ -95,14 +105,6 @@ namespace Cuerpo_Academico
             txtPassword.Clear();
         }
 
-        private bool validarCampos()
-        {
-            if (txtNombre.Text == "" || txtApellidoP.Text == "" || txtApellidoM.Text == "" || txtCorreo.Text == "" ||
-                cmbDivision.SelectedItem == null || cmbTipoUsuario.SelectedItem == null || listGrados.Items.Count == 0 || txtPassword.Text == "")
-                return false;
-            return true;
-        }
-
         private bool validarID()
         {
             if (txtID.Text == "")
@@ -113,9 +115,8 @@ namespace Cuerpo_Academico
             return false;
         }
 
-        private List<Field> createListFields()
+        private void createListFields()
         {
-            List<Field> listFields = new List<Field>();
             Field name = new Field(txtNombre.Text, "text");
             listFields.Add(name);
             Field fatherSurname = new Field(txtApellidoP.Text, "text");
@@ -126,7 +127,6 @@ namespace Cuerpo_Academico
             listFields.Add(email);
             Field password = new Field(txtPassword.Text, "password");
             listFields.Add(password);
-            return listFields;
         }
 
         #endregion
@@ -145,7 +145,7 @@ namespace Cuerpo_Academico
             comboBoxes.Add(cmbTipoUsuario);
             comboBoxes.Add(cmbDivision);
             listBoxes.Add(listGrados);
-            if (!Validator.validateFields(createListFields()) || !Validator.validateComboBoxes(comboBoxes) || !Validator.validateListBoxes(listBoxes))
+            if (!Validator.validateFields(listFields) || !Validator.validateComboBoxes(comboBoxes) || !Validator.validateListBoxes(listBoxes))
             {
                 MessageBox.Show("Faltan llenar campos\n1. Toma en cuenta que la contraseña tiene que ser mayor a 6 caracteres\n2. El correo debe ser váilido\n3. Debes seleccionar tanto el tipo de usuario como la division\n4. Agregar uno o más grados.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
@@ -276,12 +276,12 @@ namespace Cuerpo_Academico
         
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            if(txtID.Text == "")
+            if(!Validator.validateID(txtID.Text))
             {
                 MessageBox.Show("Ingresa el ID a eliminar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            if (!validarCampos())
+            if (!Validator.validateFields(listFields))
             {
                 MessageBox.Show("Faltan llenar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
@@ -318,8 +318,18 @@ namespace Cuerpo_Academico
             }
         }
 
+
         #endregion
 
-        
+        private void btnCurriculum_Click(object sender, EventArgs e)
+        {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("El ID debe ser numérico y no estar vacio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            Curriculum curriculum = new Curriculum(txtID.Text);
+            curriculum.ShowDialog();
+        }
     }
 }

@@ -60,6 +60,7 @@ namespace Cuerpo_Academico
 
         private void cargarComboBox(OdbcDataReader resultado, ComboBox comboBox)
         {
+            comboBox.Items.Clear();
             if (resultado.HasRows)
             {
                 while (resultado.Read())
@@ -75,6 +76,12 @@ namespace Cuerpo_Academico
             consulta = "SELECT * FROM nivel_carrera";
             cargarComboBox(conexion.ejecutarComando(consulta), cmbNivel);
 
+            consulta = "SELECT * FROM division";
+            cargarComboBox(conexion.ejecutarComando(consulta), cmbDivisiones);
+        }
+
+        public void cargarCmbDivisiones()
+        {
             consulta = "SELECT * FROM division";
             cargarComboBox(conexion.ejecutarComando(consulta), cmbDivisiones);
         }

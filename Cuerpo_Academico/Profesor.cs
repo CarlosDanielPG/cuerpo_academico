@@ -28,6 +28,17 @@ namespace Cuerpo_Academico
             this.correo = reader["correo"].ToString();
         }
 
+        public Profesor(string id, string nombre, string apellidoPaterno, string apellidoMaterno, string tipoUsuario, string idDivision, string correo)
+        {
+            this.id = Convert.ToInt32(id);
+            this.nombre = nombre;
+            this.apellidoPaterno = apellidoPaterno;
+            this.apellidoMaterno = apellidoMaterno;
+            this.tipoUsuario = Convert.ToInt32(tipoUsuario);
+            this.idDivision = Convert.ToInt32(idDivision);
+            this.correo = correo;
+        }
+
         public int getID() { return id; }
         
         public string getNombre() { return nombre; }
@@ -43,5 +54,10 @@ namespace Cuerpo_Academico
         public int getIdDivision() { return idDivision; }
 
         public string getCorreo() { return correo; }
+
+        public override string ToString()
+        {
+            return this.nombre + " " + this.apellidoPaterno + " " + this.apellidoMaterno;
+        }
     }
 }

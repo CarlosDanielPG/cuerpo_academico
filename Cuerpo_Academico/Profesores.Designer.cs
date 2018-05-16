@@ -64,6 +64,7 @@
             this.txtApellidoP = new System.Windows.Forms.TextBox();
             this.lblNombre = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.TextBox();
+            this.btnCurriculum = new System.Windows.Forms.Button();
             this.gbBusqueda.SuspendLayout();
             this.gbGradosDisponibles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProfesores)).BeginInit();
@@ -71,6 +72,7 @@
             // 
             // gbBusqueda
             // 
+            this.gbBusqueda.Controls.Add(this.btnCurriculum);
             this.gbBusqueda.Controls.Add(this.lblID);
             this.gbBusqueda.Controls.Add(this.txtID);
             this.gbBusqueda.Controls.Add(this.btnBuscar);
@@ -78,7 +80,7 @@
             this.gbBusqueda.Controls.Add(this.btnModificar);
             this.gbBusqueda.Location = new System.Drawing.Point(637, 23);
             this.gbBusqueda.Name = "gbBusqueda";
-            this.gbBusqueda.Size = new System.Drawing.Size(157, 173);
+            this.gbBusqueda.Size = new System.Drawing.Size(157, 197);
             this.gbBusqueda.TabIndex = 48;
             this.gbBusqueda.TabStop = false;
             this.gbBusqueda.Text = "Busqueda";
@@ -374,6 +376,16 @@
             this.txtNombre.Size = new System.Drawing.Size(129, 20);
             this.txtNombre.TabIndex = 28;
             // 
+            // btnCurriculum
+            // 
+            this.btnCurriculum.Location = new System.Drawing.Point(16, 162);
+            this.btnCurriculum.Name = "btnCurriculum";
+            this.btnCurriculum.Size = new System.Drawing.Size(129, 23);
+            this.btnCurriculum.TabIndex = 29;
+            this.btnCurriculum.Text = "Mostrar Curriculum";
+            this.btnCurriculum.UseVisualStyleBackColor = true;
+            this.btnCurriculum.Click += new System.EventHandler(this.btnCurriculum_Click);
+            // 
             // Profesores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -452,5 +464,6 @@
         private System.Windows.Forms.TextBox txtApellidoP;
         private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.TextBox txtNombre;
+        private System.Windows.Forms.Button btnCurriculum;
     }
 }
