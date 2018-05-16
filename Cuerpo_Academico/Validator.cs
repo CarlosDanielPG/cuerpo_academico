@@ -19,7 +19,17 @@ namespace Cuerpo_Academico
             }
             if (field.getType() == "email")
             {
-                return true;
+                if (field.getField().Contains('@'))
+                {
+                    if(!field.getField().Contains('.'))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }                
             }
             if (field.getType() == "password")
             {
@@ -40,7 +50,17 @@ namespace Cuerpo_Academico
                 }
                 if(field.getType() == "email")
                 {
-                    
+                    if (field.getField().Contains('@'))
+                    {
+                        if (!field.getField().Contains('.'))
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 if(field.getType() == "password")
                 {
