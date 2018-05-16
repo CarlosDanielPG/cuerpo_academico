@@ -4,3 +4,4 @@
 *.exe 
 *.json 
 .vs
+Cuerpo_Academico/obj/*
