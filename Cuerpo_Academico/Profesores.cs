@@ -16,10 +16,9 @@ namespace Cuerpo_Academico
         private string consulta;
         private Conexion conexion;
         private OdbcDataReader resultado;
-        private List<Field> listFields;
+        
         public Profesores()
         {
-            listFields = new List<Field>();
             conexion = new Conexion();
             InitializeComponent();
         }
@@ -115,8 +114,9 @@ namespace Cuerpo_Academico
             return false;
         }
 
-        private void createListFields()
+        private List<Field> createListFields()
         {
+            List<Field> listFields = new List<Field>();
             Field name = new Field(txtNombre.Text, "text");
             listFields.Add(name);
             Field fatherSurname = new Field(txtApellidoP.Text, "text");
@@ -127,6 +127,7 @@ namespace Cuerpo_Academico
             listFields.Add(email);
             Field password = new Field(txtPassword.Text, "password");
             listFields.Add(password);
+            return listFields;
         }
 
         #endregion
@@ -145,7 +146,7 @@ namespace Cuerpo_Academico
             comboBoxes.Add(cmbTipoUsuario);
             comboBoxes.Add(cmbDivision);
             listBoxes.Add(listGrados);
-            if (!Validator.validateFields(listFields) || !Validator.validateComboBoxes(comboBoxes) || !Validator.validateListBoxes(listBoxes))
+            if (!Validator.validateFields(createListFields()) || !Validator.validateComboBoxes(comboBoxes) || !Validator.validateListBoxes(listBoxes))
             {
                 MessageBox.Show("Faltan llenar campos\n1. Toma en cuenta que la contraseña tiene que ser mayor a 6 caracteres\n2. El correo debe ser váilido\n3. Debes seleccionar tanto el tipo de usuario como la division\n4. Agregar uno o más grados.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
@@ -281,7 +282,7 @@ namespace Cuerpo_Academico
                 MessageBox.Show("Ingresa el ID a eliminar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            if (!Validator.validateFields(listFields))
+            if (!Validator.validateFields(createListFields()))
             {
                 MessageBox.Show("Faltan llenar campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
