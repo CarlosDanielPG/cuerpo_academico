@@ -263,15 +263,24 @@ namespace Cuerpo_Academico
             if (MessageBox.Show("¿Seguro que deseas eliminar a " + resultado["nombre"].ToString() + " " + resultado["apellido_paterno"].ToString() + " " + resultado["apellido_materno"].ToString() + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
                 consulta = "DELETE FROM profesor WHERE id = " + txtID.Text;
-                resultado = conexion.ejecutarComando(consulta);
-                if (resultado.RecordsAffected > 0)
+                try
                 {
-                    MessageBox.Show("Profesor eliminado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LimpiarProfesor();
-                    cargarDataGridViewProfesores();
+                    resultado = conexion.ejecutarComando(consulta);
+                    if (resultado.RecordsAffected > 0)
+                    {
+                        MessageBox.Show("Profesor eliminado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LimpiarProfesor();
+                        cargarDataGridViewProfesores();
+                    }
+                    else
+                        MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
-                else
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show("No es posible eliminar, tiene registros relacionados", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
         }
         
