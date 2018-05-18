@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtTitulo = new System.Windows.Forms.TextBox();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.cmbTipoProduccion = new System.Windows.Forms.ComboBox();
@@ -36,8 +36,8 @@
             this.listElaboradores = new System.Windows.Forms.ListBox();
             this.cmbProfesores = new System.Windows.Forms.ComboBox();
             this.gbProfesores = new System.Windows.Forms.GroupBox();
-            this.btnElaboradores = new System.Windows.Forms.Button();
             this.btnColaboradores = new System.Windows.Forms.Button();
+            this.btnElaboradores = new System.Windows.Forms.Button();
             this.listColaboradores = new System.Windows.Forms.ListBox();
             this.cmbAnios = new System.Windows.Forms.ComboBox();
             this.lblAnio = new System.Windows.Forms.Label();
@@ -47,21 +47,6 @@
             this.lblFecha = new System.Windows.Forms.Label();
             this.chkCurriculum = new System.Windows.Forms.CheckBox();
             this.dgvProducciones = new System.Windows.Forms.DataGridView();
-            this.gbBuscador = new System.Windows.Forms.GroupBox();
-            this.lblProposito = new System.Windows.Forms.Label();
-            this.cmbProposito = new System.Windows.Forms.ComboBox();
-            this.lblLineaInvestigacion = new System.Windows.Forms.Label();
-            this.cmbLineaInvestigacion = new System.Windows.Forms.ComboBox();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
-            this.cmbParametro = new System.Windows.Forms.ComboBox();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.rbMostrarTodo = new System.Windows.Forms.RadioButton();
-            this.dbFiltrar = new System.Windows.Forms.RadioButton();
-            this.gbElaboradores = new System.Windows.Forms.GroupBox();
-            this.btnEliminarElaborador = new System.Windows.Forms.Button();
-            this.gbColaboradores = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btnGuardar = new System.Windows.Forms.Button();
             this.numero_registro = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.titulo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.anio = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,13 +56,28 @@
             this.proposito = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.institucion_avaladora = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.curriculum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gbBuscador = new System.Windows.Forms.GroupBox();
             this.btnBuscarTodo = new System.Windows.Forms.Button();
+            this.dbFiltrar = new System.Windows.Forms.RadioButton();
+            this.rbMostrarTodo = new System.Windows.Forms.RadioButton();
+            this.btnBuscar = new System.Windows.Forms.Button();
+            this.cmbParametro = new System.Windows.Forms.ComboBox();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
+            this.lblProposito = new System.Windows.Forms.Label();
+            this.cmbProposito = new System.Windows.Forms.ComboBox();
+            this.lblLineaInvestigacion = new System.Windows.Forms.Label();
+            this.cmbLineaInvestigacion = new System.Windows.Forms.ComboBox();
+            this.gbElaboradores = new System.Windows.Forms.GroupBox();
+            this.btnEliminarElaborador = new System.Windows.Forms.Button();
+            this.gbColaboradores = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btnGuardar = new System.Windows.Forms.Button();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.gbOperaciones = new System.Windows.Forms.GroupBox();
-            this.txtID = new System.Windows.Forms.TextBox();
-            this.lblID = new System.Windows.Forms.Label();
             this.btnBuscarID = new System.Windows.Forms.Button();
+            this.lblID = new System.Windows.Forms.Label();
+            this.txtID = new System.Windows.Forms.TextBox();
             this.gbProfesores.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducciones)).BeginInit();
             this.gbBuscador.SuspendLayout();
@@ -147,16 +147,6 @@
             this.gbProfesores.TabStop = false;
             this.gbProfesores.Text = "Profesores";
             // 
-            // btnElaboradores
-            // 
-            this.btnElaboradores.Location = new System.Drawing.Point(180, 18);
-            this.btnElaboradores.Name = "btnElaboradores";
-            this.btnElaboradores.Size = new System.Drawing.Size(168, 22);
-            this.btnElaboradores.TabIndex = 7;
-            this.btnElaboradores.Text = "Agregar a Elaboradores";
-            this.btnElaboradores.UseVisualStyleBackColor = true;
-            this.btnElaboradores.Click += new System.EventHandler(this.btnElaboradores_Click);
-            // 
             // btnColaboradores
             // 
             this.btnColaboradores.Location = new System.Drawing.Point(356, 18);
@@ -166,6 +156,16 @@
             this.btnColaboradores.Text = "Agregar a Colaboradores";
             this.btnColaboradores.UseVisualStyleBackColor = true;
             this.btnColaboradores.Click += new System.EventHandler(this.btnColaboradores_Click);
+            // 
+            // btnElaboradores
+            // 
+            this.btnElaboradores.Location = new System.Drawing.Point(180, 18);
+            this.btnElaboradores.Name = "btnElaboradores";
+            this.btnElaboradores.Size = new System.Drawing.Size(168, 22);
+            this.btnElaboradores.TabIndex = 7;
+            this.btnElaboradores.Text = "Agregar a Elaboradores";
+            this.btnElaboradores.UseVisualStyleBackColor = true;
+            this.btnElaboradores.Click += new System.EventHandler(this.btnElaboradores_Click);
             // 
             // listColaboradores
             // 
@@ -253,6 +253,56 @@
             this.dgvProducciones.Size = new System.Drawing.Size(752, 134);
             this.dgvProducciones.TabIndex = 17;
             // 
+            // numero_registro
+            // 
+            this.numero_registro.HeaderText = "Numero Registro";
+            this.numero_registro.Name = "numero_registro";
+            this.numero_registro.Width = 50;
+            // 
+            // titulo
+            // 
+            this.titulo.HeaderText = "Titulo";
+            this.titulo.Name = "titulo";
+            // 
+            // anio
+            // 
+            this.anio.HeaderText = "Año";
+            this.anio.Name = "anio";
+            this.anio.Width = 40;
+            // 
+            // fecha_publicacion
+            // 
+            dataGridViewCellStyle2.Format = "dd-MM-yyyy";
+            this.fecha_publicacion.DefaultCellStyle = dataGridViewCellStyle2;
+            this.fecha_publicacion.HeaderText = "Fecha Publicacion";
+            this.fecha_publicacion.Name = "fecha_publicacion";
+            this.fecha_publicacion.Width = 80;
+            // 
+            // tipo_produccion
+            // 
+            this.tipo_produccion.HeaderText = "Tipo Produccion";
+            this.tipo_produccion.Name = "tipo_produccion";
+            // 
+            // linea_investigacion
+            // 
+            this.linea_investigacion.HeaderText = "Linea Investigacion";
+            this.linea_investigacion.Name = "linea_investigacion";
+            // 
+            // proposito
+            // 
+            this.proposito.HeaderText = "Proposito";
+            this.proposito.Name = "proposito";
+            // 
+            // institucion_avaladora
+            // 
+            this.institucion_avaladora.HeaderText = "Institucion Avaladora";
+            this.institucion_avaladora.Name = "institucion_avaladora";
+            // 
+            // curriculum
+            // 
+            this.curriculum.HeaderText = "Cuenta curriculum";
+            this.curriculum.Name = "curriculum";
+            // 
             // gbBuscador
             // 
             this.gbBuscador.Controls.Add(this.btnBuscarTodo);
@@ -267,6 +317,69 @@
             this.gbBuscador.TabIndex = 18;
             this.gbBuscador.TabStop = false;
             this.gbBuscador.Text = "Buscador";
+            // 
+            // btnBuscarTodo
+            // 
+            this.btnBuscarTodo.Enabled = false;
+            this.btnBuscarTodo.Location = new System.Drawing.Point(175, 42);
+            this.btnBuscarTodo.Name = "btnBuscarTodo";
+            this.btnBuscarTodo.Size = new System.Drawing.Size(194, 23);
+            this.btnBuscarTodo.TabIndex = 5;
+            this.btnBuscarTodo.Text = "Buscar Por todos los parametros";
+            this.btnBuscarTodo.UseVisualStyleBackColor = true;
+            this.btnBuscarTodo.Click += new System.EventHandler(this.btnBuscarTodo_Click);
+            // 
+            // dbFiltrar
+            // 
+            this.dbFiltrar.AutoSize = true;
+            this.dbFiltrar.Location = new System.Drawing.Point(105, 48);
+            this.dbFiltrar.Name = "dbFiltrar";
+            this.dbFiltrar.Size = new System.Drawing.Size(50, 17);
+            this.dbFiltrar.TabIndex = 4;
+            this.dbFiltrar.TabStop = true;
+            this.dbFiltrar.Text = "Filtrar";
+            this.dbFiltrar.UseVisualStyleBackColor = true;
+            this.dbFiltrar.CheckedChanged += new System.EventHandler(this.dbFiltrar_CheckedChanged);
+            // 
+            // rbMostrarTodo
+            // 
+            this.rbMostrarTodo.AutoSize = true;
+            this.rbMostrarTodo.Location = new System.Drawing.Point(6, 48);
+            this.rbMostrarTodo.Name = "rbMostrarTodo";
+            this.rbMostrarTodo.Size = new System.Drawing.Size(93, 17);
+            this.rbMostrarTodo.TabIndex = 3;
+            this.rbMostrarTodo.TabStop = true;
+            this.rbMostrarTodo.Text = "Mostrar Todos";
+            this.rbMostrarTodo.UseVisualStyleBackColor = true;
+            this.rbMostrarTodo.CheckedChanged += new System.EventHandler(this.rbMostrarTodo_CheckedChanged);
+            // 
+            // btnBuscar
+            // 
+            this.btnBuscar.Enabled = false;
+            this.btnBuscar.Location = new System.Drawing.Point(278, 15);
+            this.btnBuscar.Name = "btnBuscar";
+            this.btnBuscar.Size = new System.Drawing.Size(91, 23);
+            this.btnBuscar.TabIndex = 2;
+            this.btnBuscar.Text = "Buscar";
+            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
+            // 
+            // cmbParametro
+            // 
+            this.cmbParametro.Enabled = false;
+            this.cmbParametro.FormattingEnabled = true;
+            this.cmbParametro.Location = new System.Drawing.Point(151, 17);
+            this.cmbParametro.Name = "cmbParametro";
+            this.cmbParametro.Size = new System.Drawing.Size(121, 21);
+            this.cmbParametro.TabIndex = 1;
+            // 
+            // txtBuscar
+            // 
+            this.txtBuscar.Enabled = false;
+            this.txtBuscar.Location = new System.Drawing.Point(6, 17);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(139, 20);
+            this.txtBuscar.TabIndex = 0;
             // 
             // lblProposito
             // 
@@ -301,58 +414,6 @@
             this.cmbLineaInvestigacion.Name = "cmbLineaInvestigacion";
             this.cmbLineaInvestigacion.Size = new System.Drawing.Size(181, 21);
             this.cmbLineaInvestigacion.TabIndex = 21;
-            // 
-            // txtBuscar
-            // 
-            this.txtBuscar.Enabled = false;
-            this.txtBuscar.Location = new System.Drawing.Point(6, 17);
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(139, 20);
-            this.txtBuscar.TabIndex = 0;
-            // 
-            // cmbParametro
-            // 
-            this.cmbParametro.Enabled = false;
-            this.cmbParametro.FormattingEnabled = true;
-            this.cmbParametro.Location = new System.Drawing.Point(151, 17);
-            this.cmbParametro.Name = "cmbParametro";
-            this.cmbParametro.Size = new System.Drawing.Size(121, 21);
-            this.cmbParametro.TabIndex = 1;
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Enabled = false;
-            this.btnBuscar.Location = new System.Drawing.Point(278, 15);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(91, 23);
-            this.btnBuscar.TabIndex = 2;
-            this.btnBuscar.Text = "Buscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
-            // 
-            // rbMostrarTodo
-            // 
-            this.rbMostrarTodo.AutoSize = true;
-            this.rbMostrarTodo.Location = new System.Drawing.Point(6, 48);
-            this.rbMostrarTodo.Name = "rbMostrarTodo";
-            this.rbMostrarTodo.Size = new System.Drawing.Size(93, 17);
-            this.rbMostrarTodo.TabIndex = 3;
-            this.rbMostrarTodo.TabStop = true;
-            this.rbMostrarTodo.Text = "Mostrar Todos";
-            this.rbMostrarTodo.UseVisualStyleBackColor = true;
-            this.rbMostrarTodo.CheckedChanged += new System.EventHandler(this.rbMostrarTodo_CheckedChanged);
-            // 
-            // dbFiltrar
-            // 
-            this.dbFiltrar.AutoSize = true;
-            this.dbFiltrar.Location = new System.Drawing.Point(105, 48);
-            this.dbFiltrar.Name = "dbFiltrar";
-            this.dbFiltrar.Size = new System.Drawing.Size(50, 17);
-            this.dbFiltrar.TabIndex = 4;
-            this.dbFiltrar.TabStop = true;
-            this.dbFiltrar.Text = "Filtrar";
-            this.dbFiltrar.UseVisualStyleBackColor = true;
-            this.dbFiltrar.CheckedChanged += new System.EventHandler(this.dbFiltrar_CheckedChanged);
             // 
             // gbElaboradores
             // 
@@ -406,67 +467,6 @@
             this.btnGuardar.UseVisualStyleBackColor = true;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
-            // numero_registro
-            // 
-            this.numero_registro.HeaderText = "Numero Registro";
-            this.numero_registro.Name = "numero_registro";
-            this.numero_registro.Width = 50;
-            // 
-            // titulo
-            // 
-            this.titulo.HeaderText = "Titulo";
-            this.titulo.Name = "titulo";
-            // 
-            // anio
-            // 
-            this.anio.HeaderText = "Año";
-            this.anio.Name = "anio";
-            this.anio.Width = 40;
-            // 
-            // fecha_publicacion
-            // 
-            dataGridViewCellStyle1.Format = "dd-MM-yyyy";
-            this.fecha_publicacion.DefaultCellStyle = dataGridViewCellStyle1;
-            this.fecha_publicacion.HeaderText = "Fecha Publicacion";
-            this.fecha_publicacion.Name = "fecha_publicacion";
-            this.fecha_publicacion.Width = 80;
-            // 
-            // tipo_produccion
-            // 
-            this.tipo_produccion.HeaderText = "Tipo Produccion";
-            this.tipo_produccion.Name = "tipo_produccion";
-            // 
-            // linea_investigacion
-            // 
-            this.linea_investigacion.HeaderText = "Linea Investigacion";
-            this.linea_investigacion.Name = "linea_investigacion";
-            // 
-            // proposito
-            // 
-            this.proposito.HeaderText = "Proposito";
-            this.proposito.Name = "proposito";
-            // 
-            // institucion_avaladora
-            // 
-            this.institucion_avaladora.HeaderText = "Institucion Avaladora";
-            this.institucion_avaladora.Name = "institucion_avaladora";
-            // 
-            // curriculum
-            // 
-            this.curriculum.HeaderText = "Cuenta curriculum";
-            this.curriculum.Name = "curriculum";
-            // 
-            // btnBuscarTodo
-            // 
-            this.btnBuscarTodo.Enabled = false;
-            this.btnBuscarTodo.Location = new System.Drawing.Point(175, 42);
-            this.btnBuscarTodo.Name = "btnBuscarTodo";
-            this.btnBuscarTodo.Size = new System.Drawing.Size(194, 23);
-            this.btnBuscarTodo.TabIndex = 5;
-            this.btnBuscarTodo.Text = "Buscar Por todos los parametros";
-            this.btnBuscarTodo.UseVisualStyleBackColor = true;
-            this.btnBuscarTodo.Click += new System.EventHandler(this.btnBuscarTodo_Click);
-            // 
             // btnModificar
             // 
             this.btnModificar.Location = new System.Drawing.Point(131, 42);
@@ -485,6 +485,7 @@
             this.btnEliminar.TabIndex = 26;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // gbOperaciones
             // 
@@ -501,12 +502,15 @@
             this.gbOperaciones.TabStop = false;
             this.gbOperaciones.Text = "Operaciones";
             // 
-            // txtID
+            // btnBuscarID
             // 
-            this.txtID.Location = new System.Drawing.Point(9, 36);
-            this.txtID.Name = "txtID";
-            this.txtID.Size = new System.Drawing.Size(100, 20);
-            this.txtID.TabIndex = 27;
+            this.btnBuscarID.Location = new System.Drawing.Point(239, 15);
+            this.btnBuscarID.Name = "btnBuscarID";
+            this.btnBuscarID.Size = new System.Drawing.Size(109, 23);
+            this.btnBuscarID.TabIndex = 29;
+            this.btnBuscarID.Text = "Buscar";
+            this.btnBuscarID.UseVisualStyleBackColor = true;
+            this.btnBuscarID.Click += new System.EventHandler(this.btnBuscarID_Click);
             // 
             // lblID
             // 
@@ -517,14 +521,12 @@
             this.lblID.TabIndex = 28;
             this.lblID.Text = "Numero registro:";
             // 
-            // btnBuscarID
+            // txtID
             // 
-            this.btnBuscarID.Location = new System.Drawing.Point(239, 15);
-            this.btnBuscarID.Name = "btnBuscarID";
-            this.btnBuscarID.Size = new System.Drawing.Size(109, 23);
-            this.btnBuscarID.TabIndex = 29;
-            this.btnBuscarID.Text = "Buscar";
-            this.btnBuscarID.UseVisualStyleBackColor = true;
+            this.txtID.Location = new System.Drawing.Point(9, 36);
+            this.txtID.Name = "txtID";
+            this.txtID.Size = new System.Drawing.Size(100, 20);
+            this.txtID.TabIndex = 27;
             // 
             // Producciones
             // 

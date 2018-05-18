@@ -135,7 +135,7 @@ namespace Cuerpo_Academico
                 }
             }
         }
-        
+
         #endregion
 
         private void Producciones_Load(object sender, EventArgs e)
@@ -337,7 +337,243 @@ namespace Cuerpo_Academico
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("Ingresa el ID a modificiar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
+            if (!Validator.validateComboBoxes(comboBoxes))
+            {
+                MessageBox.Show("Selecciona un valor para todos los campos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!Validator.validateListBoxes(listBoxes))
+            {
+                MessageBox.Show("Agrega por lo menos un colaborador", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!Validator.validateField(new Field(txtTitulo.Text, "text")))
+            {
+                MessageBox.Show("Agrega un título", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            consulta = "SELECT titulo FROM produccion WHERE numero_registro = " + txtID.Text;
+
+            resultado = conexion.ejecutarComando(consulta);
+
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se encuentra la produccion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (chkCurriculum.CheckState == CheckState.Checked)
+            {
+                cuenta_curriculum = 1;
+            }
+
+            consulta = "UPDATE produccion SET titulo = '" + txtTitulo.Text + "', anio = '" + cmbAnios.SelectedItem.ToString() + "', fecha_publicacion = '" +
+                dtpFecha.Value.Date.ToString("yyyy-MM-dd") + "', id_tipo_produccion = " + (cmbTipoProduccion.SelectedItem as ComboBoxItem).Value + ", id_linea_investigacion = " +
+                (cmbLineaInvestigacion.SelectedItem as ComboBoxItem).Value + ", id_proposito = " + (cmbProposito.SelectedItem as ComboBoxItem).Value + ", id_institucion_avaladora = " +
+                (cmbInstituciones.SelectedItem as ComboBoxItem).Value + ", cuenta_curriculum = " + cuenta_curriculum + " WHERE numero_registro = " + txtID.Text + ";";
+           
+            resultado = conexion.ejecutarComando(consulta);
+
+            if (resultado.RecordsAffected > 0)
+            {
+                consulta = "DELETE FROM profesor_elabora_produccion WHERE id_produccion = " + txtID.Text + ";";
+
+                resultado = conexion.ejecutarComando(consulta);
+                              
+                consulta = "INSERT INTO profesor_elabora_produccion (id_profesor, id_produccion) VALUES (" + profesor.getID() + ", " + txtID.Text + ");";
+
+                resultado = conexion.ejecutarComando(consulta);
+
+                foreach (var item in listElaboradores.Items)
+                {
+                    if((item as Profesor).getID() != profesor.getID())
+                    {
+                        consulta = "INSERT INTO profesor_elabora_produccion (id_profesor, id_produccion) VALUES (" + (item as Profesor).getID() + ", " + txtID.Text + ");";
+
+                        resultado = conexion.ejecutarComando(consulta);
+                    }                    
+                }
+
+                consulta = "DELETE FROM profesor_colabora_produccion WHERE id_produccion = " + txtID.Text;
+
+                resultado = conexion.ejecutarComando(consulta);
+                
+                foreach (var item in listColaboradores.Items)
+                {
+                    consulta = "INSERT INTO profesor_colabora_produccion (id_profesor, id_produccion) VALUES (" + (item as Profesor).getID() + ", " + txtID.Text + ");";
+
+                    resultado = conexion.ejecutarComando(consulta);
+                }                
+
+                MessageBox.Show("Produccion modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                cargarDataGridProducciones(consultaGeneral);
+            }
+        }
+
+        private void btnBuscarID_Click(object sender, EventArgs e)
+        {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("Ingresa el ID a buscar y numérico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            consulta = "SELECT titulo, anio, fecha_publicacion, id_tipo_produccion, id_linea_investigacion, id_proposito, id_institucion_avaladora, cuenta_curriculum FROM produccion WHERE numero_registro = " + txtID.Text;
+
+            resultado = conexion.ejecutarComando(consulta);
+
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se ha encontrado la produccion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            listElaboradores.Items.Clear();
+
+            listColaboradores.Items.Clear();
+
+            txtTitulo.Text = resultado["titulo"].ToString();
+
+            int index = 0;
+            foreach (var item in cmbTipoProduccion.Items)
+            {
+                if ((item as ComboBoxItem).Value == resultado["id_tipo_produccion"].ToString())
+                    cmbTipoProduccion.SelectedIndex = index;
+                index++;
+            }
+
+            index = 0;
+            foreach (var item in cmbProposito.Items)
+            {
+                if ((item as ComboBoxItem).Value == resultado["id_proposito"].ToString())
+                    cmbProposito.SelectedIndex = index;
+                index++;
+            }
+
+            /*
+            FECHA            
+            dtpFecha.Value = DateTime.ParseExact(String.Format("{0:yyyy-MM-dd}", (DateTime)resultado["fecha_publicacion"]), "yyyy-MM-dd", CultureInfo.InvariantCulture);         
+            */
+
+            if(resultado["cuenta_curriculum"].ToString() == "1")
+            {
+                chkCurriculum.Checked = true;
+            }
+            else
+            {
+                chkCurriculum.Checked = false;
+            }
+
+            index = 0;
+            foreach (var item in cmbAnios.Items)
+            {                
+                if (item.ToString() == resultado["anio"].ToString())
+                    cmbAnios.SelectedIndex = index;
+                index++;
+            }
+            
+            index = 0;
+            foreach (var item in cmbInstituciones.Items)
+            {
+                if ((item as ComboBoxItem).Value == resultado["id_institucion_avaladora"].ToString())
+                    cmbInstituciones.SelectedIndex = index;
+                index++;
+            }
+
+            index = 0;
+            foreach (var item in cmbLineaInvestigacion.Items)
+            {
+                if ((item as ComboBoxItem).Value == resultado["id_linea_investigacion"].ToString())
+                    cmbLineaInvestigacion.SelectedIndex = index;
+                index++;
+            }
+
+            consulta = "SELECT * FROM profesor_elabora_produccion WHERE id_produccion = " + txtID.Text;
+
+            resultado = conexion.ejecutarComando(consulta);
+            
+            if (resultado.HasRows)
+            {
+                while (resultado.Read())
+                {
+                    foreach (var item in cmbProfesores.Items)
+                    {
+                        string id = resultado["id_profesor"].ToString();
+                        if ((item as Profesor).getID().ToString() == id)
+                        {
+                            listElaboradores.Items.Add(item);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            consulta = "SELECT * FROM profesor_colabora_produccion WHERE id_produccion = " + txtID.Text;
+
+            resultado = conexion.ejecutarComando(consulta);
+
+            if (resultado.HasRows)
+            {
+                while (resultado.Read())
+                {
+                    foreach (var item in cmbProfesores.Items)
+                    {
+                        string id = resultado["id_profesor"].ToString();
+                        if ((item as Profesor).getID().ToString() == id)
+                        {
+                            listColaboradores.Items.Add(item);
+                            break;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (!Validator.validateID(txtID.Text))
+            {
+                MessageBox.Show("El ID debe ser numérico y no estar vacio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            consulta = "SELECT titulo FROM produccion WHERE numero_registro = " + txtID.Text;
+
+            resultado = conexion.ejecutarComando(consulta);
+
+            if (!resultado.HasRows)
+            {
+                MessageBox.Show("No se ha encontrado la produccion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            if (MessageBox.Show("¿Seguro que deseas eliminar a la produccion " + resultado["titulo"].ToString() + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            {
+
+                consulta = "DELETE FROM produccion WHERE numero_registro = " + txtID.Text;
+
+                resultado = conexion.ejecutarComando(consulta);
+
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("Produccion eliminada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    limpiarCampos();
+                    cargarDataGridProducciones(consultaGeneral);
+                }
+                else
+                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
