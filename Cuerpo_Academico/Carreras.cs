@@ -192,20 +192,28 @@ namespace Cuerpo_Academico
             if (MessageBox.Show("¿Seguro que deseas eliminar a " + resultado["nombre"].ToString() + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
                 consulta = "DELETE FROM carrera WHERE id = " + txtID.Text;
-
-                resultado = conexion.ejecutarComando(consulta);
-
-                if (resultado.RecordsAffected > 0)
+                try
                 {
-                    MessageBox.Show("Carrera eliminada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    resultado = conexion.ejecutarComando(consulta);
 
-                    LimpiarCarrera();
+                    if (resultado.RecordsAffected > 0)
+                    {
+                        MessageBox.Show("Carrera eliminada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    cargarDataGridViewCarreras();
+                        LimpiarCarrera();
+
+                        cargarDataGridViewCarreras();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
                 }
-                else
+                catch (NullReferenceException)
                 {
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No es posible eliminar, tiene registros relacionados", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }

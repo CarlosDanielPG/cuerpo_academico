@@ -119,20 +119,27 @@ namespace Cuerpo_Academico
             if (MessageBox.Show("¿Seguro que deseas eliminar a " + resultado["descripcion"].ToString() + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
                 consulta = "DELETE FROM proposito WHERE id = " + txtID.Text;
-
-                resultado = conexion.ejecutarComando(consulta);
-
-                if (resultado.RecordsAffected > 0)
+                try
                 {
-                    MessageBox.Show("Proposito eliminado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    resultado = conexion.ejecutarComando(consulta);
 
-                    Limpiar();
+                    if (resultado.RecordsAffected > 0)
+                    {
+                        MessageBox.Show("Proposito eliminado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    cargarDataGridViewPropositos();
+                        Limpiar();
+
+                        cargarDataGridViewPropositos();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (NullReferenceException)
                 {
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No es posible eliminar, tiene registros relacionados", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }

@@ -116,16 +116,24 @@ namespace Cuerpo_Academico
             if (MessageBox.Show("¿Seguro que deseas eliminar " + resultado["descripcion"].ToString() + "?", "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
                 consulta = "DELETE FROM tipo_produccion WHERE id = " + txtID.Text;
-                resultado = conexion.ejecutarComando(consulta);
-                if (resultado.RecordsAffected > 0)
+                try
                 {
-                    MessageBox.Show("Tipo de producción eliminado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Limpiar();
-                    cargarDataGridViewDivisiones();
+                    resultado = conexion.ejecutarComando(consulta);
+                    if (resultado.RecordsAffected > 0)
+                    {
+                        MessageBox.Show("Tipo de producción eliminado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Limpiar();
+                        cargarDataGridViewDivisiones();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (NullReferenceException)
                 {
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No es posible eliminar, tiene registros relacionados", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }
