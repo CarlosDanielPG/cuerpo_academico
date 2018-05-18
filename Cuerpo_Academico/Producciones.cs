@@ -509,7 +509,7 @@ namespace Cuerpo_Academico
                     foreach (var item in cmbProfesores.Items)
                     {
                         string id = resultado["id_profesor"].ToString();
-                        if ((item as Profesor).getID().ToString() == id)
+                        if ((item as Profesor).getID().ToString() == id && (item as Profesor).getID() != profesor.getID())
                         {
                             listElaboradores.Items.Add(item);
                             break;
