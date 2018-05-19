@@ -185,6 +185,11 @@ namespace Cuerpo_Academico
                 MessageBox.Show("Ya está incluido ese profesor", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
+            if((cmbProfesores.SelectedItem as Profesor).getTipoUsuario() == 4)
+            {
+                MessageBox.Show("No puedes agregar a un colaborador a la lista de elaboradores", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             listElaboradores.Items.Add(cmbProfesores.SelectedItem);
         }
 

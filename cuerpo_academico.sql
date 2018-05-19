@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 16-05-2018 a las 23:01:32
+-- Tiempo de generación: 19-05-2018 a las 20:51:43
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 7.2.4
 
@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `carrera` (
   `id_nivel` int(10) NOT NULL,
   `id_division` int(10) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `nombre` (`nombre`),
   KEY `nivel` (`id_nivel`),
   KEY `division` (`id_division`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -60,17 +61,20 @@ DROP TABLE IF EXISTS `division`;
 CREATE TABLE IF NOT EXISTS `division` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nombre` (`nombre`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `division`
 --
 
 INSERT INTO `division` (`id`, `nombre`) VALUES
+(4, 'DIVCB'),
 (1, 'DIVEC'),
+(9, 'DIVECI'),
 (3, 'DIVEO'),
-(4, 'DIVCB');
+(5, 'DIVIN');
 
 -- --------------------------------------------------------
 
@@ -106,7 +110,8 @@ DROP TABLE IF EXISTS `institucion`;
 CREATE TABLE IF NOT EXISTS `institucion` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nombre` (`nombre`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
@@ -125,8 +130,9 @@ INSERT INTO `institucion` (`id`, `nombre`) VALUES
 DROP TABLE IF EXISTS `linea_investigacion`;
 CREATE TABLE IF NOT EXISTS `linea_investigacion` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `descripcion` text NOT NULL,
-  PRIMARY KEY (`id`)
+  `descripcion` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `descripcion` (`descripcion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
@@ -176,19 +182,22 @@ CREATE TABLE IF NOT EXISTS `produccion` (
   `id_institucion_avaladora` int(10) NOT NULL,
   `cuenta_curriculum` tinyint(1) NOT NULL,
   PRIMARY KEY (`numero_registro`),
+  UNIQUE KEY `titulo` (`titulo`),
   KEY `linea_investigacion` (`id_linea_investigacion`),
   KEY `proposito` (`id_proposito`),
   KEY `institucion_avaladora` (`id_institucion_avaladora`),
   KEY `id_tipo_produccion` (`id_tipo_produccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `produccion`
 --
 
 INSERT INTO `produccion` (`numero_registro`, `titulo`, `anio`, `fecha_publicacion`, `id_tipo_produccion`, `id_linea_investigacion`, `id_proposito`, `id_institucion_avaladora`, `cuenta_curriculum`) VALUES
-(5, 'Produccion 1', 2018, '2018-05-16', 1, 2, 2, 1, 1),
-(6, 'Produccion 2', 2017, '2018-05-16', 1, 1, 1, 1, 0);
+(5, 'Produccion 1', 2018, '2018-05-18', 1, 2, 2, 1, 1),
+(6, 'Produccion 2', 2017, '2018-05-16', 1, 1, 1, 1, 0),
+(8, 'Produccion 3', 2018, '2018-05-18', 1, 2, 2, 1, 1),
+(9, 'Produccion 4', 2018, '2018-05-24', 1, 1, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -209,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `profesor` (
   PRIMARY KEY (`id`),
   KEY `tipo_usuario` (`tipo_usuario`),
   KEY `id_division` (`id_division`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `profesor`
@@ -217,9 +226,11 @@ CREATE TABLE IF NOT EXISTS `profesor` (
 
 INSERT INTO `profesor` (`id`, `nombre`, `apellido_paterno`, `apellido_materno`, `tipo_usuario`, `id_division`, `correo`, `password`) VALUES
 (1, 'Carlos Daniel', 'Perez', 'Gutierrez', 1, 1, 'carlospdcg@hotmail.com', '8fe918632d847e8ea3ebffbd47bd8ca9'),
-(2, 'Shamir Issai', 'Caro', 'Ortiz', 2, 1, 'shamir@mail.com', 'd93591bdf7860e1e4ee2fca799911215'),
+(2, 'Shamir Issai', 'Caro', 'Ortiz', 2, 1, 'shamir@mail.com', 'e10adc3949ba59abbe56e057f20f883e'),
 (3, 'Christian', 'Vargas', 'Orozco', 2, 1, 'christian@mail.com', 'e10adc3949ba59abbe56e057f20f883e'),
-(4, 'Hassem', 'Macias', 'Brambila', 3, 1, 'hassem@mail.com', 'e10adc3949ba59abbe56e057f20f883e');
+(4, 'Hassem', 'Macias', 'Brambila', 3, 1, 'hassem@mail.com', 'e10adc3949ba59abbe56e057f20f883e'),
+(5, 'Arturo', 'Ramirez', 'Jimenez', 2, 1, 'arturo@mail.com', 'e10adc3949ba59abbe56e057f20f883e'),
+(6, 'Israel', 'Roman', 'Godinez', 4, 3, 'isra@el.com', 'e10adc3949ba59abbe56e057f20f883e');
 
 -- --------------------------------------------------------
 
@@ -235,16 +246,19 @@ CREATE TABLE IF NOT EXISTS `profesor_colabora_produccion` (
   PRIMARY KEY (`id`),
   KEY `id_profesor` (`id_profesor`),
   KEY `id_produccion` (`id_produccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `profesor_colabora_produccion`
 --
 
 INSERT INTO `profesor_colabora_produccion` (`id`, `id_profesor`, `id_produccion`) VALUES
-(1, 2, 5),
-(2, 3, 5),
-(3, 2, 6);
+(3, 2, 6),
+(8, 2, 5),
+(9, 3, 5),
+(10, 2, 8),
+(11, 4, 8),
+(12, 3, 9);
 
 -- --------------------------------------------------------
 
@@ -260,17 +274,22 @@ CREATE TABLE IF NOT EXISTS `profesor_elabora_produccion` (
   PRIMARY KEY (`id`),
   KEY `id_profesor` (`id_profesor`),
   KEY `id_produccion` (`id_produccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `profesor_elabora_produccion`
 --
 
 INSERT INTO `profesor_elabora_produccion` (`id`, `id_profesor`, `id_produccion`) VALUES
-(3, 1, 5),
-(4, 2, 5),
 (5, 1, 6),
-(6, 3, 6);
+(6, 3, 6),
+(10, 1, 5),
+(11, 2, 5),
+(12, 4, 8),
+(13, 2, 8),
+(14, 1, 9),
+(15, 2, 9),
+(16, 3, 9);
 
 -- --------------------------------------------------------
 
@@ -286,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `profesor_grado` (
   PRIMARY KEY (`id`),
   KEY `id_profesor` (`id_profesor`),
   KEY `id_grado` (`id_grado`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `profesor_grado`
@@ -298,7 +317,9 @@ INSERT INTO `profesor_grado` (`id`, `id_profesor`, `id_grado`) VALUES
 (12, 1, 1),
 (13, 1, 2),
 (14, 3, 2),
-(15, 4, 1);
+(15, 4, 1),
+(16, 5, 1),
+(17, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -309,9 +330,10 @@ INSERT INTO `profesor_grado` (`id`, `id_profesor`, `id_grado`) VALUES
 DROP TABLE IF EXISTS `proposito`;
 CREATE TABLE IF NOT EXISTS `proposito` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `descripcion` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `descripcion` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `descripcion` (`descripcion`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `proposito`
@@ -331,7 +353,8 @@ DROP TABLE IF EXISTS `tipo_produccion`;
 CREATE TABLE IF NOT EXISTS `tipo_produccion` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `descripcion` (`descripcion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
@@ -396,14 +419,14 @@ ALTER TABLE `profesor`
 --
 ALTER TABLE `profesor_colabora_produccion`
   ADD CONSTRAINT `profesor_colabora_produccion_ibfk_1` FOREIGN KEY (`id_produccion`) REFERENCES `produccion` (`numero_registro`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `profesor_colabora_produccion_ibfk_2` FOREIGN KEY (`id_profesor`) REFERENCES `profesor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `profesor_colabora_produccion_ibfk_2` FOREIGN KEY (`id_profesor`) REFERENCES `profesor` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `profesor_elabora_produccion`
 --
 ALTER TABLE `profesor_elabora_produccion`
   ADD CONSTRAINT `profesor_elabora_produccion_ibfk_1` FOREIGN KEY (`id_produccion`) REFERENCES `produccion` (`numero_registro`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `profesor_elabora_produccion_ibfk_2` FOREIGN KEY (`id_profesor`) REFERENCES `profesor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `profesor_elabora_produccion_ibfk_2` FOREIGN KEY (`id_profesor`) REFERENCES `profesor` (`id`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `profesor_grado`

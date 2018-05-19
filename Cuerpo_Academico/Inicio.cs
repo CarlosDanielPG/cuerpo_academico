@@ -56,7 +56,7 @@ namespace Cuerpo_Academico
             // Profesores
             if (tabProfesores != null)
             {
-                profesores = new Profesores();
+                profesores = new Profesores(profesor);
                 profesores.TopLevel = false;
                 tabProfesores.Controls.Add(profesores);
                 profesores.Show();

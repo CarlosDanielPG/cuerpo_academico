@@ -90,12 +90,12 @@ namespace Cuerpo_Academico
                 consulta = "SELECT produccion.numero_registro, produccion.titulo, produccion.anio, produccion.fecha_publicacion AS fecha_publicacion, " +
                     "tipo_produccion.descripcion AS tipo_produccion, linea_investigacion.descripcion AS linea_investigacion, " +
                     "proposito.descripcion AS proposito, institucion.nombre As institucion, produccion.cuenta_curriculum " +
-                    "FROM produccion, tipo_produccion, linea_investigacion, proposito, institucion, profesor_elabora_produccion, profesor " +
+                    "FROM produccion, tipo_produccion, linea_investigacion, proposito, institucion, profesor_elabora_produccion, profesor, profesor_colabora_produccion " +
                     "WHERE produccion.id_tipo_produccion = tipo_produccion.id AND produccion.id_linea_investigacion = linea_investigacion.id " +
                     "AND produccion.id_proposito = proposito.id AND produccion.id_institucion_avaladora = institucion.id " +
                     "AND produccion.numero_registro = profesor_elabora_produccion.id_produccion " +
-                    "AND profesor.id = profesor_elabora_produccion.id_profesor " +
-                    "AND (SELECT CONCAT(profesor.nombre, ' ', profesor.apellido_paterno, ' ', profesor.apellido_materno)) LIKE '%" + (cmbIntegrantes.SelectedItem as Profesor).ToString() + "%' ";
+                    "AND (profesor.id = profesor_elabora_produccion.id_profesor OR profesor.id = profesor_colabora_produccion.id_profesor) " +
+                    "AND profesor.id = " + (cmbIntegrantes.SelectedItem as Profesor).getID() + " ";
             else
                 consulta = "SELECT produccion.numero_registro, produccion.titulo, produccion.anio, produccion.fecha_publicacion AS fecha_publicacion, tipo_produccion.descripcion AS tipo_produccion, linea_investigacion.descripcion AS linea_investigacion, proposito.descripcion AS proposito, institucion.nombre As institucion, produccion.cuenta_curriculum " +
                      "FROM produccion, tipo_produccion, linea_investigacion, proposito, institucion " +
@@ -109,6 +109,8 @@ namespace Cuerpo_Academico
                 consulta += "AND linea_investigacion.id = " + (cmbLineaInvestigacion.SelectedItem as ComboBoxItem).Value + " ";
             if (cmbTipo.SelectedItem != null)
                 consulta += "AND tipo_produccion.id = " + (cmbTipo.SelectedItem as ComboBoxItem).Value + " ";
+            if (cmbIntegrantes.SelectedItem != null)
+                consulta += "GROUP BY produccion.numero_registro ";
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

@@ -16,9 +16,11 @@ namespace Cuerpo_Academico
         private string consulta;
         private Conexion conexion;
         private OdbcDataReader resultado;
+        private Profesor profesor;
         
-        public Profesores()
+        public Profesores(Profesor profesor)
         {
+            this.profesor = profesor;
             conexion = new Conexion();
             InitializeComponent();
         }
@@ -251,6 +253,11 @@ namespace Cuerpo_Academico
             if (!Validator.validateID(txtID.Text))
             {
                 MessageBox.Show("El ID debe ser numérico y no estar vacio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            if(profesor.getID().ToString() == txtID.Text)
+            {
+                MessageBox.Show("No te puedes eliminar a ti mismo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             consulta = "SELECT nombre, apellido_paterno, apellido_materno FROM profesor WHERE id = " + txtID.Text;

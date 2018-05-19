@@ -89,13 +89,21 @@ namespace Cuerpo_Academico
                 return;
             }
             consulta = "INSERT INTO division (nombre) VALUES('" + txtNombre.Text + "');";
-            resultado = conexion.ejecutarComando(consulta);
-            if (resultado.RecordsAffected > 0)
+            try
             {
-                MessageBox.Show("División guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                resultado = conexion.ejecutarComando(consulta);
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("División guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                Limpiar();
+                cargarDataGridViewDivisiones();
             }
-            Limpiar();
-            cargarDataGridViewDivisiones();
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Ya existe una division con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
         
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -161,15 +169,23 @@ namespace Cuerpo_Academico
             {
                 consulta = "UPDATE division SET nombre = '" + txtNombre.Text + "' WHERE  id = " + txtID.Text ;
                 resultado = conexion.ejecutarComando(consulta);
-                if (resultado.RecordsAffected > 0)
+                try
                 {
-                    MessageBox.Show("División modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Limpiar();
-                    cargarDataGridViewDivisiones();
+                    if (resultado.RecordsAffected > 0)
+                    {
+                        MessageBox.Show("División modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Limpiar();
+                        cargarDataGridViewDivisiones();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (NullReferenceException)
                 {
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ya existe una division con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }
