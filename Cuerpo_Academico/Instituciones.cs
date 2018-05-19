@@ -73,12 +73,20 @@ namespace Cuerpo_Academico
             }
             consulta = "INSERT INTO institucion (nombre) VALUES('" + txtNombre.Text + "');";
             resultado = conexion.ejecutarComando(consulta);
-            if (resultado.RecordsAffected > 0)
+            try
             {
-                MessageBox.Show("Institución guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("Institución guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                Limpiar();
+                cargarDataGridView();
             }
-            Limpiar();
-            cargarDataGridView();
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Ya existe una institución con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -163,15 +171,23 @@ namespace Cuerpo_Academico
             {
                 consulta = "UPDATE institucion SET nombre = '" + txtNombre.Text + "' WHERE  id = " + txtID.Text;
                 resultado = conexion.ejecutarComando(consulta);
-                if (resultado.RecordsAffected > 0)
+                try
                 {
-                    MessageBox.Show("Institución modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Limpiar();
-                    cargarDataGridView();
+                    if (resultado.RecordsAffected > 0)
+                    {
+                        MessageBox.Show("Institución modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Limpiar();
+                        cargarDataGridView();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (NullReferenceException)
                 {
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ya existe una institución con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }

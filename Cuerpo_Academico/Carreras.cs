@@ -116,15 +116,22 @@ namespace Cuerpo_Academico
             }
 
             consulta = "INSERT INTO carrera (nombre, id_nivel, id_division) VALUES('" + txtNombre.Text + "', " + (cmbNivel.SelectedItem as ComboBoxItem).Value.ToString() + ", " + (cmbDivisiones.SelectedItem as ComboBoxItem).Value.ToString() + ");";
-
-            resultado = conexion.ejecutarComando(consulta);
-
-            if (resultado.RecordsAffected > 0)
+            try
             {
-                MessageBox.Show("Carrera guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+                resultado = conexion.ejecutarComando(consulta);
 
-            cargarDataGridViewCarreras();
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("Carrera guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                cargarDataGridViewCarreras();
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Ya existe una carrera con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -246,15 +253,23 @@ namespace Cuerpo_Academico
             {
                 consulta = "UPDATE carrera SET nombre = '" + txtNombre.Text + "', id_nivel = " + (cmbNivel.SelectedItem as ComboBoxItem).Value.ToString() + ", id_division = " + (cmbDivisiones.SelectedItem as ComboBoxItem).Value.ToString() + " WHERE  id = " + txtID.Text;
                 resultado = conexion.ejecutarComando(consulta);
-                if (resultado.RecordsAffected > 0)
+                try
                 {
-                    MessageBox.Show("Carrera modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LimpiarCarrera();
-                    cargarDataGridViewCarreras();
+                    if (resultado.RecordsAffected > 0)
+                    {
+                        MessageBox.Show("Carrera modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LimpiarCarrera();
+                        cargarDataGridViewCarreras();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (NullReferenceException)
                 {
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ya existe una carrera con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }

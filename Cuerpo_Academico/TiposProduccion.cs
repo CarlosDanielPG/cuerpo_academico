@@ -73,12 +73,20 @@ namespace Cuerpo_Academico
             }
             consulta = "INSERT INTO tipo_produccion (descripcion) VALUES('" + txtNombre.Text + "');";
             resultado = conexion.ejecutarComando(consulta);
-            if (resultado.RecordsAffected > 0)
+            try
             {
-                MessageBox.Show("Tipo de producción guardada", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("Tipo de producción guardada", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                Limpiar();
+                cargarDataGridViewDivisiones();
             }
-            Limpiar();
-            cargarDataGridViewDivisiones();
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Ya existe un tipo de propósito con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -162,15 +170,23 @@ namespace Cuerpo_Academico
             {
                 consulta = "UPDATE tipo_produccion SET descripcion = '" + txtNombre.Text + "' WHERE  id = " + txtID.Text;
                 resultado = conexion.ejecutarComando(consulta);
-                if (resultado.RecordsAffected > 0)
+                try
                 {
-                    MessageBox.Show("Tipo de producción modificado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Limpiar();
-                    cargarDataGridViewDivisiones();
+                    if (resultado.RecordsAffected > 0)
+                    {
+                        MessageBox.Show("Tipo de producción modificado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Limpiar();
+                        cargarDataGridViewDivisiones();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (NullReferenceException)
                 {
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ya existe un tipo de propósito con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }

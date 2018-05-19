@@ -74,12 +74,20 @@ namespace Cuerpo_Academico
             }
             consulta = "INSERT INTO linea_investigacion (descripcion) VALUES('" + txtNombre.Text + "');";
             resultado = conexion.ejecutarComando(consulta);
-            if (resultado.RecordsAffected > 0)
+            try
             {
-                MessageBox.Show("Línea de investigación guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (resultado.RecordsAffected > 0)
+                {
+                    MessageBox.Show("Línea de investigación guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                Limpiar();
+                cargarDataGridViewDivisiones();
             }
-            Limpiar();
-            cargarDataGridViewDivisiones();
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Ya existe una línea de investigación con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void btnBuscar_Click_1(object sender, EventArgs e)
@@ -164,15 +172,23 @@ namespace Cuerpo_Academico
             {
                 consulta = "UPDATE linea_investigacion SET descripcion = '" + txtNombre.Text + "' WHERE  id = " + txtID.Text;
                 resultado = conexion.ejecutarComando(consulta);
-                if (resultado.RecordsAffected > 0)
+                try
                 {
-                    MessageBox.Show("Línea de investigación modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Limpiar();
-                    cargarDataGridViewDivisiones();
+                    if (resultado.RecordsAffected > 0)
+                    {
+                        MessageBox.Show("Línea de investigación modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Limpiar();
+                        cargarDataGridViewDivisiones();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (NullReferenceException)
                 {
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ya existe una línea de investigación con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }

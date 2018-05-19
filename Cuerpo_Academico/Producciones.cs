@@ -252,23 +252,31 @@ namespace Cuerpo_Academico
                 (cmbTipoProduccion.SelectedItem as ComboBoxItem).Value + ", " + (cmbLineaInvestigacion.SelectedItem as ComboBoxItem).Value + ", " +
                 (cmbProposito.SelectedItem as ComboBoxItem).Value + ", " + (cmbInstituciones.SelectedItem as ComboBoxItem).Value + ", " + cuenta_curriculum + ")";
             resultado = conexion.ejecutarComando(consulta);
-            if(resultado.RecordsAffected == 0)
+            try
             {
-                MessageBox.Show("Error al guardar, consulta al administrador", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                if(resultado.RecordsAffected == 0)
+                {
+                    MessageBox.Show("Error al guardar, consulta al administrador", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                consulta = "INSERT INTO profesor_elabora_produccion (id_profesor, id_produccion) VALUES (" + profesor.getID() + ", (SELECT max(numero_registro) FROM produccion))";
+                foreach (var item in listElaboradores.Items)
+                    consulta += ", (" + (item as Profesor).getID() + ", (SELECT max(numero_registro) FROM produccion))";
+                resultado = conexion.ejecutarComando(consulta);
+                consulta = "INSERT INTO profesor_colabora_produccion (id_profesor, id_produccion) VALUES";
+                foreach (var item in listColaboradores.Items)
+                    consulta += "(" + (item as Profesor).getID() + ", (SELECT max(numero_registro) FROM produccion)),";
+                consulta = consulta.Substring(0, consulta.Length - 1);
+                resultado = conexion.ejecutarComando(consulta);
+                MessageBox.Show("Produccion guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                limpiarCampos();
+                cargarDataGridProducciones(consultaGeneral);
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Ya existe una producción con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            consulta = "INSERT INTO profesor_elabora_produccion (id_profesor, id_produccion) VALUES (" + profesor.getID() + ", (SELECT max(numero_registro) FROM produccion))";
-            foreach (var item in listElaboradores.Items)
-                consulta += ", (" + (item as Profesor).getID() + ", (SELECT max(numero_registro) FROM produccion))";
-            resultado = conexion.ejecutarComando(consulta);
-            consulta = "INSERT INTO profesor_colabora_produccion (id_profesor, id_produccion) VALUES";
-            foreach (var item in listColaboradores.Items)
-                consulta += "(" + (item as Profesor).getID() + ", (SELECT max(numero_registro) FROM produccion)),";
-            consulta = consulta.Substring(0, consulta.Length - 1);
-            resultado = conexion.ejecutarComando(consulta);
-            MessageBox.Show("Produccion guardada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            limpiarCampos();
-            cargarDataGridProducciones(consultaGeneral);
         }
 
         private void dbFiltrar_CheckedChanged(object sender, EventArgs e)
@@ -387,40 +395,48 @@ namespace Cuerpo_Academico
            
             resultado = conexion.ejecutarComando(consulta);
 
-            if (resultado.RecordsAffected > 0)
+            try
             {
-                consulta = "DELETE FROM profesor_elabora_produccion WHERE id_produccion = " + txtID.Text + ";";
-
-                resultado = conexion.ejecutarComando(consulta);
-                              
-                consulta = "INSERT INTO profesor_elabora_produccion (id_profesor, id_produccion) VALUES (" + profesor.getID() + ", " + txtID.Text + ");";
-
-                resultado = conexion.ejecutarComando(consulta);
-
-                foreach (var item in listElaboradores.Items)
+                if (resultado.RecordsAffected > 0)
                 {
-                    if((item as Profesor).getID() != profesor.getID())
-                    {
-                        consulta = "INSERT INTO profesor_elabora_produccion (id_profesor, id_produccion) VALUES (" + (item as Profesor).getID() + ", " + txtID.Text + ");";
-
-                        resultado = conexion.ejecutarComando(consulta);
-                    }                    
-                }
-
-                consulta = "DELETE FROM profesor_colabora_produccion WHERE id_produccion = " + txtID.Text;
-
-                resultado = conexion.ejecutarComando(consulta);
-                
-                foreach (var item in listColaboradores.Items)
-                {
-                    consulta = "INSERT INTO profesor_colabora_produccion (id_profesor, id_produccion) VALUES (" + (item as Profesor).getID() + ", " + txtID.Text + ");";
+                    consulta = "DELETE FROM profesor_elabora_produccion WHERE id_produccion = " + txtID.Text + ";";
 
                     resultado = conexion.ejecutarComando(consulta);
-                }                
+                              
+                    consulta = "INSERT INTO profesor_elabora_produccion (id_profesor, id_produccion) VALUES (" + profesor.getID() + ", " + txtID.Text + ");";
 
-                MessageBox.Show("Produccion modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    resultado = conexion.ejecutarComando(consulta);
 
-                cargarDataGridProducciones(consultaGeneral);
+                    foreach (var item in listElaboradores.Items)
+                    {
+                        if((item as Profesor).getID() != profesor.getID())
+                        {
+                            consulta = "INSERT INTO profesor_elabora_produccion (id_profesor, id_produccion) VALUES (" + (item as Profesor).getID() + ", " + txtID.Text + ");";
+
+                            resultado = conexion.ejecutarComando(consulta);
+                        }                    
+                    }
+
+                    consulta = "DELETE FROM profesor_colabora_produccion WHERE id_produccion = " + txtID.Text;
+
+                    resultado = conexion.ejecutarComando(consulta);
+                
+                    foreach (var item in listColaboradores.Items)
+                    {
+                        consulta = "INSERT INTO profesor_colabora_produccion (id_profesor, id_produccion) VALUES (" + (item as Profesor).getID() + ", " + txtID.Text + ");";
+
+                        resultado = conexion.ejecutarComando(consulta);
+                    }                
+
+                    MessageBox.Show("Produccion modificada", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    cargarDataGridProducciones(consultaGeneral);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Ya existe una producción con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
 

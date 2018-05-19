@@ -66,7 +66,8 @@ namespace Cuerpo_Academico
             consulta = "INSERT INTO proposito (descripcion) VALUES('" + txtDescripcion.Text + "');";
 
             resultado = conexion.ejecutarComando(consulta);
-
+            try
+            {
             if (resultado.RecordsAffected > 0)
             {
                 MessageBox.Show("Proposito guardado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -75,6 +76,12 @@ namespace Cuerpo_Academico
             Limpiar();
 
             cargarDataGridViewPropositos();
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Ya existe un propósito con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -172,18 +179,25 @@ namespace Cuerpo_Academico
                 consulta = "UPDATE proposito SET descripcion = '" + txtDescripcion.Text + "' WHERE  id = " + txtID.Text;
 
                 resultado = conexion.ejecutarComando(consulta);
-
-                if (resultado.RecordsAffected > 0)
+                try
                 {
-                    MessageBox.Show("Proposito modificado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (resultado.RecordsAffected > 0)
+                    {
+                        MessageBox.Show("Proposito modificado", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    Limpiar();
+                        Limpiar();
 
-                    cargarDataGridViewPropositos();
+                        cargarDataGridViewPropositos();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (NullReferenceException)
                 {
-                    MessageBox.Show("Error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ya existe un propósito con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
         }
