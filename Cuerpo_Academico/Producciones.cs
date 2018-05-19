@@ -121,8 +121,7 @@ namespace Cuerpo_Academico
                     fila.Cells[1].Value = resultado["titulo"].ToString();
                     fila.Cells[2].Value = resultado["anio"].ToString();
                     //fila.Cells[3].Value = date.ToString("dd-MM-yyyy");
-                    fila.Cells[3].Value = resultado["fecha_publicacion"].ToString();
-                    fila.Cells[3].Value = resultado["fecha_publicacion"].ToString();
+                    fila.Cells[3].Value = resultado["fecha_publicacion"].ToString().Substring(0, 10);
                     fila.Cells[4].Value = resultado["tipo_produccion"].ToString();
                     fila.Cells[5].Value = resultado["linea_investigacion"].ToString();
                     fila.Cells[6].Value = resultado["proposito"].ToString();
@@ -140,7 +139,7 @@ namespace Cuerpo_Academico
 
         private void Producciones_Load(object sender, EventArgs e)
         {
-            dtpFecha.MinDate = DateTime.Today;
+            //dtpFecha.MinDate = DateTime.Today;
             dtpFecha.Format = DateTimePickerFormat.Custom;
             dtpFecha.CustomFormat = "yyyy-MM-dd";
             dgvProducciones.Columns["fecha_publicacion"].DefaultCellStyle.Format = "dd/MM/yyyy";
@@ -460,12 +459,11 @@ namespace Cuerpo_Academico
                 index++;
             }
 
-            /*
-            FECHA            
-            dtpFecha.Value = DateTime.ParseExact(String.Format("{0:yyyy-MM-dd}", (DateTime)resultado["fecha_publicacion"]), "yyyy-MM-dd", CultureInfo.InvariantCulture);         
-            */
+            string fecha = resultado["fecha_publicacion"].ToString(); 
+            dtpFecha.Value = new DateTime(Convert.ToInt32(fecha.Substring(6, 4)), Convert.ToInt32(fecha.Substring(3, 2)), Convert.ToInt32(fecha.Substring(0, 2)));
 
-            if(resultado["cuenta_curriculum"].ToString() == "1")
+
+            if (resultado["cuenta_curriculum"].ToString() == "1")
             {
                 chkCurriculum.Checked = true;
             }

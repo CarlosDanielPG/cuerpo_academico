@@ -14,9 +14,6 @@ namespace Cuerpo_Academico
     public partial class Inicio : Form
     {
         private Login login;
-        private string consulta;
-        private Conexion conexion;
-        private OdbcDataReader resultado;
         private Profesor profesor;
         Profesores profesores = null;
         Divisiones divisiones = null;
@@ -26,12 +23,12 @@ namespace Cuerpo_Academico
         TiposProduccion tiposProduccion = null;
         Producciones producciones = null;
         Instituciones instituciones = null;
+        ProduccionesPropias produccionesPropias = null;
 
         public Inicio(Login login, Profesor profesor)
         {
             this.login = login;
             this.profesor = profesor;
-            this.conexion = new Conexion();
             InitializeComponent();
         }
 
@@ -42,68 +39,114 @@ namespace Cuerpo_Academico
 
         private void Inicio_Load(object sender, EventArgs e)
         {
-            //tcPrincipal.TabPages.Remove(tabCarreras);
+            if(profesor.getTipoUsuario() == 3 || profesor.getTipoUsuario() == 4)
+            {
+                tcPrincipal.TabPages.Remove(tabProfesores);
+                tcPrincipal.TabPages.Remove(tabDivisiones);
+                tcPrincipal.TabPages.Remove(tabCarreras);
+                tcPrincipal.TabPages.Remove(tabLineasInvestigacion);
+                tcPrincipal.TabPages.Remove(tabProfesores);
+                tcPrincipal.TabPages.Remove(tabPropositos);
+                tcPrincipal.TabPages.Remove(tabInstituciones);
+                tcPrincipal.TabPages.Remove(tabTiposProduccion);
+                if (profesor.getTipoUsuario() == 4)
+                    tcPrincipal.TabPages.Remove(tabProducciones);
+            }
             sLblUsuario.Text += " " + profesor.getNombreCompleto();
             // Profesores
-            profesores = new Profesores();
-            profesores.TopLevel = false;
-            tabProfesores.Controls.Add(profesores);
-            profesores.Show();
+            if (tabProfesores != null)
+            {
+                profesores = new Profesores();
+                profesores.TopLevel = false;
+                tabProfesores.Controls.Add(profesores);
+                profesores.Show();
+            }
             // Divisiones
-            divisiones = new Divisiones();
-            divisiones.TopLevel = false;
-            tabDivisiones.Controls.Add(divisiones);
-            divisiones.Show();
+            if (tabDivisiones != null)
+            {
+                divisiones = new Divisiones();
+                divisiones.TopLevel = false;
+                tabDivisiones.Controls.Add(divisiones);
+                divisiones.Show();
+            }
             // Carreras
-            carreras = new Carreras();
-            carreras.TopLevel = false;
-            tabCarreras.Controls.Add(carreras);
-            carreras.Show();
+            if (tabCarreras != null)
+            {
+                carreras = new Carreras();
+                carreras.TopLevel = false;
+                tabCarreras.Controls.Add(carreras);
+                carreras.Show();
+            }
             // Lineas Investigacion
-            lineasInvestigacion = new LineasInvestigacion();
-            lineasInvestigacion.TopLevel = false;
-            tabLineasInvestigacion.Controls.Add(lineasInvestigacion);
-            lineasInvestigacion.Show();
+            if (tabLineasInvestigacion != null)
+            {
+                lineasInvestigacion = new LineasInvestigacion();
+                lineasInvestigacion.TopLevel = false;
+                tabLineasInvestigacion.Controls.Add(lineasInvestigacion);
+                lineasInvestigacion.Show();
+            }
             // Propósitos
-            propositos = new Propositos();
-            propositos.TopLevel = false;
-            tabPropositos.Controls.Add(propositos);
-            propositos.Show();
+            if (tabPropositos != null)
+            {
+                propositos = new Propositos();
+                propositos.TopLevel = false;
+                tabPropositos.Controls.Add(propositos);
+                propositos.Show();
+            }
             // Instituciones
-            instituciones = new Instituciones();
-            instituciones.TopLevel = false;
-            tabInstituciones.Controls.Add(instituciones);
-            instituciones.Show();
+            if (tabInstituciones != null)
+            {
+                instituciones = new Instituciones();
+                instituciones.TopLevel = false;
+                tabInstituciones.Controls.Add(instituciones);
+                instituciones.Show();
+            }
             // Tipos de Produccion
-            tiposProduccion = new TiposProduccion();
-            tiposProduccion.TopLevel = false;
-            tabTiposProduccion.Controls.Add(tiposProduccion);
-            tiposProduccion.Show();
+            if (tabTiposProduccion != null)
+            {
+                tiposProduccion = new TiposProduccion();
+                tiposProduccion.TopLevel = false;
+                tabTiposProduccion.Controls.Add(tiposProduccion);
+                tiposProduccion.Show();
+            }
             // Producciones
-            producciones = new Producciones(this.profesor);
-            producciones.TopLevel = false;
-            tabProducciones.Controls.Add(producciones);
-            producciones.Show();
+            if (tabProducciones != null)
+            {
+                producciones = new Producciones(this.profesor);
+                producciones.TopLevel = false;
+                tabProducciones.Controls.Add(producciones);
+                producciones.Show();
+            }
+            produccionesPropias = new ProduccionesPropias(this.profesor);
+            produccionesPropias.TopLevel = false;
+            tabProduccionesPropias.Controls.Add(produccionesPropias);
+            produccionesPropias.Show();
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            Close();
+            if(MessageBox.Show("¿Seguro que deseas salir?", "Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                Close();
         }
 
         private void tcPrincipal_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tcPrincipal.SelectedIndex == 0 && profesores != null)
+            if (tcPrincipal.SelectedTab == tabDivisiones && profesores != null)
                 profesores.cargarCmbDivisiones();
-            if (tcPrincipal.SelectedIndex == 2 && carreras != null)
+            if(tcPrincipal.SelectedTab == tabCarreras && carreras != null)
                 carreras.cargarCmbDivisiones();
-            if(tcPrincipal.SelectedIndex == 7 && producciones != null)
+            if(tcPrincipal.SelectedTab == tabProducciones && producciones != null)
             {
                 producciones.cargarInstituciones();
                 producciones.cargarLineasInvestigacion();
                 producciones.cargarProfesores();
                 producciones.cargarPropositos();
                 producciones.cargarTiposProduccion();
+            }
+            if(tcPrincipal.SelectedTab == tabProduccionesPropias && produccionesPropias != null)
+            {
+                produccionesPropias.cargarDataGridProducciones();
+                produccionesPropias.cargarDataGridProduccionesElabora();
             }
         }
     }

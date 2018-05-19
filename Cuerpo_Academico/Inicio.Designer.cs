@@ -34,12 +34,13 @@
             this.tabCarreras = new System.Windows.Forms.TabPage();
             this.tabLineasInvestigacion = new System.Windows.Forms.TabPage();
             this.tabPropositos = new System.Windows.Forms.TabPage();
+            this.tabInstituciones = new System.Windows.Forms.TabPage();
             this.tabTiposProduccion = new System.Windows.Forms.TabPage();
             this.tabProducciones = new System.Windows.Forms.TabPage();
             this.btnSalir = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.sLblUsuario = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tabInstituciones = new System.Windows.Forms.TabPage();
+            this.tabProduccionesPropias = new System.Windows.Forms.TabPage();
             this.tcPrincipal.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -54,6 +55,7 @@
             this.tcPrincipal.Controls.Add(this.tabInstituciones);
             this.tcPrincipal.Controls.Add(this.tabTiposProduccion);
             this.tcPrincipal.Controls.Add(this.tabProducciones);
+            this.tcPrincipal.Controls.Add(this.tabProduccionesPropias);
             this.tcPrincipal.Location = new System.Drawing.Point(12, 12);
             this.tcPrincipal.Name = "tcPrincipal";
             this.tcPrincipal.SelectedIndex = 0;
@@ -108,6 +110,15 @@
             this.tabPropositos.Text = "Propositos";
             this.tabPropositos.UseVisualStyleBackColor = true;
             // 
+            // tabInstituciones
+            // 
+            this.tabInstituciones.Location = new System.Drawing.Point(4, 22);
+            this.tabInstituciones.Name = "tabInstituciones";
+            this.tabInstituciones.Size = new System.Drawing.Size(813, 399);
+            this.tabInstituciones.TabIndex = 7;
+            this.tabInstituciones.Text = "Instituciones";
+            this.tabInstituciones.UseVisualStyleBackColor = true;
+            // 
             // tabTiposProduccion
             // 
             this.tabTiposProduccion.Location = new System.Drawing.Point(4, 22);
@@ -152,14 +163,15 @@
             this.sLblUsuario.Size = new System.Drawing.Size(50, 17);
             this.sLblUsuario.Text = "Usuario:";
             // 
-            // tabInstituciones
+            // tabProduccionesPropias
             // 
-            this.tabInstituciones.Location = new System.Drawing.Point(4, 22);
-            this.tabInstituciones.Name = "tabInstituciones";
-            this.tabInstituciones.Size = new System.Drawing.Size(813, 399);
-            this.tabInstituciones.TabIndex = 7;
-            this.tabInstituciones.Text = "Instituciones";
-            this.tabInstituciones.UseVisualStyleBackColor = true;
+            this.tabProduccionesPropias.Location = new System.Drawing.Point(4, 22);
+            this.tabProduccionesPropias.Name = "tabProduccionesPropias";
+            this.tabProduccionesPropias.Padding = new System.Windows.Forms.Padding(3);
+            this.tabProduccionesPropias.Size = new System.Drawing.Size(813, 399);
+            this.tabProduccionesPropias.TabIndex = 8;
+            this.tabProduccionesPropias.Text = "Producciones Propias";
+            this.tabProduccionesPropias.UseVisualStyleBackColor = true;
             // 
             // Inicio
             // 
@@ -195,5 +207,6 @@
         private System.Windows.Forms.TabPage tabPropositos;
         private System.Windows.Forms.TabPage tabTiposProduccion;
         private System.Windows.Forms.TabPage tabInstituciones;
+        private System.Windows.Forms.TabPage tabProduccionesPropias;
     }
 }
