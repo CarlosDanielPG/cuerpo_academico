@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 19-05-2018 a las 20:51:43
+-- Tiempo de generación: 21-05-2018 a las 03:04:18
 -- Versión del servidor: 5.7.21
--- Versión de PHP: 7.2.4
+-- Versión de PHP: 5.6.35
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `cuerpo_academico`
 --
-CREATE DATABASE IF NOT EXISTS `cuerpo_academico` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `cuerpo_academico`;
 
 -- --------------------------------------------------------
 
@@ -40,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `carrera` (
   UNIQUE KEY `nombre` (`nombre`),
   KEY `nivel` (`id_nivel`),
   KEY `division` (`id_division`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `carrera`
@@ -49,7 +47,15 @@ CREATE TABLE IF NOT EXISTS `carrera` (
 INSERT INTO `carrera` (`id`, `nombre`, `id_nivel`, `id_division`) VALUES
 (1, 'Ingenieria en Computacion', 1, 1),
 (2, 'Ingenieria en Informatica', 1, 1),
-(3, 'Ingenieria en Electronica', 1, 3);
+(3, 'Licenciatura en Física', 1, 3),
+(4, 'Licenciatura en Matemáticas', 1, 3),
+(5, 'Ingeniería Industrial', 1, 4),
+(6, 'Ingeniería Química', 1, 4),
+(7, 'Licenciatura en Contaduría Pública', 1, 11),
+(8, 'Licenciatura en Economía', 1, 12),
+(9, 'Licenciatura en gestión y Economía Ambiental', 1, 12),
+(10, 'Licenciatura en Recursos Humanos', 1, 13),
+(11, 'Licenciatura en Administración', 1, 13);
 
 -- --------------------------------------------------------
 
@@ -63,18 +69,19 @@ CREATE TABLE IF NOT EXISTS `division` (
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `division`
 --
 
 INSERT INTO `division` (`id`, `nombre`) VALUES
-(4, 'DIVCB'),
-(1, 'DIVEC'),
-(9, 'DIVECI'),
-(3, 'DIVEO'),
-(5, 'DIVIN');
+(11, 'División de Contaduría'),
+(12, 'División de Economía y Sociedad'),
+(1, 'División de Electrónica y Computación'),
+(13, 'División de Gestión Empresarial'),
+(4, 'División de Ingenierías'),
+(3, 'Dvisión de Ciencias Básicas');
 
 -- --------------------------------------------------------
 
@@ -112,14 +119,18 @@ CREATE TABLE IF NOT EXISTS `institucion` (
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `institucion`
 --
 
 INSERT INTO `institucion` (`id`, `nombre`) VALUES
-(1, 'Institucion 1');
+(6, 'CINVESTAV'),
+(4, 'ITESO'),
+(3, 'Tecnológico de Monterrey'),
+(1, 'Universidad de Guadalajara'),
+(5, 'Universidad Iberoamericana');
 
 -- --------------------------------------------------------
 
@@ -133,15 +144,20 @@ CREATE TABLE IF NOT EXISTS `linea_investigacion` (
   `descripcion` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `descripcion` (`descripcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `linea_investigacion`
 --
 
 INSERT INTO `linea_investigacion` (`id`, `descripcion`) VALUES
-(1, 'Linea 1'),
-(2, 'Linea 2');
+(6, 'Competitividad y Productividad'),
+(5, 'Economía ecológica'),
+(1, 'Inteligencia Artificial'),
+(7, 'Mercadeo'),
+(2, 'Sistemas de Cómputo'),
+(3, 'Sistemas de Información'),
+(4, 'Teoría de la Computación');
 
 -- --------------------------------------------------------
 
@@ -194,10 +210,7 @@ CREATE TABLE IF NOT EXISTS `produccion` (
 --
 
 INSERT INTO `produccion` (`numero_registro`, `titulo`, `anio`, `fecha_publicacion`, `id_tipo_produccion`, `id_linea_investigacion`, `id_proposito`, `id_institucion_avaladora`, `cuenta_curriculum`) VALUES
-(5, 'Produccion 1', 2018, '2018-05-18', 1, 2, 2, 1, 1),
-(6, 'Produccion 2', 2017, '2018-05-16', 1, 1, 1, 1, 0),
-(8, 'Produccion 3', 2018, '2018-05-18', 1, 2, 2, 1, 1),
-(9, 'Produccion 4', 2018, '2018-05-24', 1, 1, 2, 1, 1);
+(5, 'Produccion 1', 2018, '2018-05-18', 1, 2, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -227,10 +240,7 @@ CREATE TABLE IF NOT EXISTS `profesor` (
 INSERT INTO `profesor` (`id`, `nombre`, `apellido_paterno`, `apellido_materno`, `tipo_usuario`, `id_division`, `correo`, `password`) VALUES
 (1, 'Carlos Daniel', 'Perez', 'Gutierrez', 1, 1, 'carlospdcg@hotmail.com', '8fe918632d847e8ea3ebffbd47bd8ca9'),
 (2, 'Shamir Issai', 'Caro', 'Ortiz', 2, 1, 'shamir@mail.com', 'e10adc3949ba59abbe56e057f20f883e'),
-(3, 'Christian', 'Vargas', 'Orozco', 2, 1, 'christian@mail.com', 'e10adc3949ba59abbe56e057f20f883e'),
-(4, 'Hassem', 'Macias', 'Brambila', 3, 1, 'hassem@mail.com', 'e10adc3949ba59abbe56e057f20f883e'),
-(5, 'Arturo', 'Ramirez', 'Jimenez', 2, 1, 'arturo@mail.com', 'e10adc3949ba59abbe56e057f20f883e'),
-(6, 'Israel', 'Roman', 'Godinez', 4, 3, 'isra@el.com', 'e10adc3949ba59abbe56e057f20f883e');
+(3, 'Christian', 'Vargas', 'Orozco', 2, 1, 'christian@mail.com', 'e10adc3949ba59abbe56e057f20f883e');
 
 -- --------------------------------------------------------
 
@@ -253,12 +263,8 @@ CREATE TABLE IF NOT EXISTS `profesor_colabora_produccion` (
 --
 
 INSERT INTO `profesor_colabora_produccion` (`id`, `id_profesor`, `id_produccion`) VALUES
-(3, 2, 6),
 (8, 2, 5),
-(9, 3, 5),
-(10, 2, 8),
-(11, 4, 8),
-(12, 3, 9);
+(9, 3, 5);
 
 -- --------------------------------------------------------
 
@@ -281,15 +287,8 @@ CREATE TABLE IF NOT EXISTS `profesor_elabora_produccion` (
 --
 
 INSERT INTO `profesor_elabora_produccion` (`id`, `id_profesor`, `id_produccion`) VALUES
-(5, 1, 6),
-(6, 3, 6),
 (10, 1, 5),
-(11, 2, 5),
-(12, 4, 8),
-(13, 2, 8),
-(14, 1, 9),
-(15, 2, 9),
-(16, 3, 9);
+(11, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -316,10 +315,7 @@ INSERT INTO `profesor_grado` (`id`, `id_profesor`, `id_grado`) VALUES
 (11, 2, 1),
 (12, 1, 1),
 (13, 1, 2),
-(14, 3, 2),
-(15, 4, 1),
-(16, 5, 1),
-(17, 6, 1);
+(14, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -333,15 +329,19 @@ CREATE TABLE IF NOT EXISTS `proposito` (
   `descripcion` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `descripcion` (`descripcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `proposito`
 --
 
 INSERT INTO `proposito` (`id`, `descripcion`) VALUES
-(1, 'Proposito 1'),
-(2, 'Proposito 2');
+(2, 'Análisis de la informacion'),
+(5, 'Desarollo Empresarial'),
+(4, 'Desarrollo Administrativo'),
+(6, 'Desarrollo de Aplicaciones'),
+(1, 'Estudio del estado'),
+(3, 'Investigación General');
 
 -- --------------------------------------------------------
 
@@ -355,13 +355,14 @@ CREATE TABLE IF NOT EXISTS `tipo_produccion` (
   `descripcion` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `descripcion` (`descripcion`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tipo_produccion`
 --
 
 INSERT INTO `tipo_produccion` (`id`, `descripcion`) VALUES
+(3, 'Específico'),
 (1, 'General');
 
 -- --------------------------------------------------------
