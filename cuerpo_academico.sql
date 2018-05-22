@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 21-05-2018 a las 03:04:18
+-- Tiempo de generación: 22-05-2018 a las 03:01:27
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -203,14 +203,16 @@ CREATE TABLE IF NOT EXISTS `produccion` (
   KEY `proposito` (`id_proposito`),
   KEY `institucion_avaladora` (`id_institucion_avaladora`),
   KEY `id_tipo_produccion` (`id_tipo_produccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `produccion`
 --
 
 INSERT INTO `produccion` (`numero_registro`, `titulo`, `anio`, `fecha_publicacion`, `id_tipo_produccion`, `id_linea_investigacion`, `id_proposito`, `id_institucion_avaladora`, `cuenta_curriculum`) VALUES
-(5, 'Produccion 1', 2018, '2018-05-18', 1, 2, 2, 1, 1);
+(5, 'Movilidad urbana', 2017, '2018-05-17', 3, 1, 6, 6, 1),
+(6, 'Verificador', 2015, '2015-12-02', 1, 4, 6, 4, 1),
+(7, 'La economia dentro de la computacion', 2016, '2018-07-22', 3, 5, 3, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -231,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `profesor` (
   PRIMARY KEY (`id`),
   KEY `tipo_usuario` (`tipo_usuario`),
   KEY `id_division` (`id_division`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `profesor`
@@ -240,7 +242,9 @@ CREATE TABLE IF NOT EXISTS `profesor` (
 INSERT INTO `profesor` (`id`, `nombre`, `apellido_paterno`, `apellido_materno`, `tipo_usuario`, `id_division`, `correo`, `password`) VALUES
 (1, 'Carlos Daniel', 'Perez', 'Gutierrez', 1, 1, 'carlospdcg@hotmail.com', '8fe918632d847e8ea3ebffbd47bd8ca9'),
 (2, 'Shamir Issai', 'Caro', 'Ortiz', 2, 1, 'shamir@mail.com', 'e10adc3949ba59abbe56e057f20f883e'),
-(3, 'Christian', 'Vargas', 'Orozco', 2, 1, 'christian@mail.com', 'e10adc3949ba59abbe56e057f20f883e');
+(3, 'Christian', 'Vargas', 'Orozco', 2, 1, 'christian@mail.com', 'e10adc3949ba59abbe56e057f20f883e'),
+(4, 'Juan', 'Torres', 'López', 3, 3, 'Juan23@hotmail.com', 'e10adc3949ba59abbe56e057f20f883e'),
+(5, 'Carmen', 'Ruíz', 'Sandoval', 4, 12, 'Carusan@gmal.com', 'c33367701511b4f6020ec61ded352059');
 
 -- --------------------------------------------------------
 
@@ -256,15 +260,19 @@ CREATE TABLE IF NOT EXISTS `profesor_colabora_produccion` (
   PRIMARY KEY (`id`),
   KEY `id_profesor` (`id_profesor`),
   KEY `id_produccion` (`id_produccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `profesor_colabora_produccion`
 --
 
 INSERT INTO `profesor_colabora_produccion` (`id`, `id_profesor`, `id_produccion`) VALUES
-(8, 2, 5),
-(9, 3, 5);
+(10, 3, 5),
+(11, 5, 5),
+(12, 2, 5),
+(14, 5, 7),
+(15, 1, 7),
+(16, 1, 6);
 
 -- --------------------------------------------------------
 
@@ -280,15 +288,20 @@ CREATE TABLE IF NOT EXISTS `profesor_elabora_produccion` (
   PRIMARY KEY (`id`),
   KEY `id_profesor` (`id_profesor`),
   KEY `id_produccion` (`id_produccion`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `profesor_elabora_produccion`
 --
 
 INSERT INTO `profesor_elabora_produccion` (`id`, `id_profesor`, `id_produccion`) VALUES
-(10, 1, 5),
-(11, 2, 5);
+(12, 1, 5),
+(13, 2, 5),
+(17, 1, 7),
+(18, 3, 7),
+(19, 1, 6),
+(20, 4, 6),
+(21, 2, 6);
 
 -- --------------------------------------------------------
 
@@ -304,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `profesor_grado` (
   PRIMARY KEY (`id`),
   KEY `id_profesor` (`id_profesor`),
   KEY `id_grado` (`id_grado`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `profesor_grado`
@@ -315,7 +328,11 @@ INSERT INTO `profesor_grado` (`id`, `id_profesor`, `id_grado`) VALUES
 (11, 2, 1),
 (12, 1, 1),
 (13, 1, 2),
-(14, 3, 2);
+(14, 3, 2),
+(15, 4, 1),
+(16, 4, 3),
+(21, 5, 1),
+(22, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -341,7 +358,7 @@ INSERT INTO `proposito` (`id`, `descripcion`) VALUES
 (4, 'Desarrollo Administrativo'),
 (6, 'Desarrollo de Aplicaciones'),
 (1, 'Estudio del estado'),
-(3, 'Investigación General');
+(3, 'Investigación');
 
 -- --------------------------------------------------------
 
